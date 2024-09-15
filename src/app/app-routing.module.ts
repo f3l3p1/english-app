@@ -1,16 +1,17 @@
+// app-routing.module.ts
 import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: '',
-    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
-  }
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then(m => m.LoginModule), // Correct module name
+  },
+  // other routes...
 ];
+
 @NgModule({
-  imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
-  ],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes)], // Use forRoot here
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

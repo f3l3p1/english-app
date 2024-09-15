@@ -1,0 +1,53 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding login-content">
+  <!-- Logo and Background -->
+  <div class="background-pattern">
+    <img src="assets/images/logo2.png" alt="App Logo" class="app-logo" />
+  </div>
+
+  <!-- Login Form -->
+  <ion-card class="login-card">
+    <ion-card-header>
+      <ion-card-title>Welcome to English Tea</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <!-- Email Input -->
+      <ion-item lines="none">
+        <ion-label position="stacked">Email</ion-label>
+        <ion-input type="email" [(ngModel)]="email" placeholder="Enter your email"></ion-input>
+      </ion-item>
+
+      <!-- Password Input -->
+      <ion-item lines="none" class="input-item">
+        <ion-label position="stacked">Password</ion-label>
+        <ion-input type="password" [(ngModel)]="password" placeholder="Enter your password"></ion-input>
+      </ion-item>
+
+      <!-- Login Button -->
+      <ion-button expand="block" (click)="login()" shape="round" class="login-button">
+        Log In
+      </ion-button>
+
+      <!-- Google Sign-In Button -->
+      <ion-button expand="block" color="danger" (click)="signInWithGoogle()" shape="round">
+        Sign In with Google
+      </ion-button>
+
+      <!-- Forgot Password Link -->
+      <ion-text color="medium" class="forgot-password" (click)="forgotPassword()">
+        Forgot your password?
+      </ion-text>
+
+      <!-- Error Message Display -->
+      <div *ngIf="errorMessage" class="error-message">
+        <p>{{ errorMessage }}</p>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
