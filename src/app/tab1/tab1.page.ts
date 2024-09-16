@@ -12,12 +12,13 @@ import { User } from 'firebase/auth';
 })
 export class Tab1Page implements OnInit {
   user$: Observable<User | null>; // Observable for the current user
+  stats: any = { clasesCompletadas: 0, tareasCompletadas: 0, logros: 0 }; // Default stats values
 
   courses = [
-    { title: 'New Comers', image: 'assets/images/newcomers.webp' },
-    { title: 'Novices', image: 'assets/images/novices.jpg' },
-    { title: 'Skilled', image: 'assets/images/skilled.webp' },
-    { title: 'Transitionals', image: 'assets/images/transitionals.jpg' }
+    { id: 1, title: 'New Comers', image: 'assets/images/newcomers.webp' },
+    { id: 2, title: 'Novices', image: 'assets/images/novices.jpg' },
+    { id: 3, title: 'Skilled', image: 'assets/images/skilled.webp' },
+    { id: 4, title: 'Transitionals', image: 'assets/images/transitionals.jpg' }
   ];
 
   constructor(private authService: AuthService, private router: Router) {
@@ -25,10 +26,22 @@ export class Tab1Page implements OnInit {
     this.user$ = this.authService.currentUser$;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Any additional initialization can be done here
+  }
 
   // Navigate to the update profile component
   goToUpdateProfile() {
     this.router.navigate(['/update-profile']);
+  }
+
+  // Navigate to Tab3
+  goToTab3() {
+    this.router.navigate(['/tabs/tab3']);
+  }
+
+  // Navigate to the subscribe page of the selected course
+  goToSubscribe(courseId: number) {
+    this.router.navigate(['/subscribe', courseId]);
   }
 }
