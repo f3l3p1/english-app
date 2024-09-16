@@ -1,17 +1,70 @@
-<ion-header [translucent]="true">
+<!-- src/app/tab2/tab2.page.html -->
+<ion-header>
   <ion-toolbar>
-    <ion-title>
-      Tab 2
-    </ion-title>
+    <ion-title>Profile</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="goToUpdateProfile()">
+        <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <div class="profile-container">
+    <div class="user-info" *ngIf="user$ | async as user">
+      <ion-avatar>
+        <img [src]="user.photoURL || 'assets/images/9187604.png'" alt="User Icon">
+      </ion-avatar>
+      <h2>{{ user.displayName }}</h2>
+      <p>{{ user.email }}</p>
+    </div>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+    <div class="stats">
+      <ion-card>
+        <ion-row>
+          <ion-col>
+            <ion-icon name="document-text-outline" color="danger"></ion-icon>
+            <p>21</p>
+            <small>Clases Completadas</small>
+          </ion-col>
+          <ion-col>
+            <ion-icon name="clipboard-outline" color="danger"></ion-icon>
+            <p>15</p>
+            <small>Tareas Completadas</small>
+          </ion-col>
+          <ion-col>
+            <ion-icon name="trophy-outline" color="danger"></ion-icon>
+            <p>5</p>
+            <small>Logros</small>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+    </div>
+
+    <div class="current-course">
+      <ion-card>
+        <ion-img [src]="currentCourse.image"></ion-img>
+        <ion-card-content>
+          <h3>{{ currentCourse.title }}</h3>
+          <p>{{ currentCourse.description }}</p>
+          <ion-button expand="block" fill="clear" color="primary">Ver más</ion-button>
+          <ion-progress-bar value="currentCourse.progress / 100"></ion-progress-bar>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <div class="recent-sessions">
+      <h3>Últimas sesiones <ion-icon name="book-outline"></ion-icon></h3>
+      <ion-scroll scrollX="true">
+        <ion-card *ngFor="let session of recentSessions">
+          <ion-card-content>
+            <p>{{ session.sessionNumber }}</p>
+            <ion-button size="small" fill="clear">Ver comentarios</ion-button>
+            <small>{{ session.title }}</small>
+          </ion-card-content>
+        </ion-card>
+      </ion-scroll>
+    </div>
+  </div>
 </ion-content>

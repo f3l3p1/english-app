@@ -1,0 +1,61 @@
+/* src/app/tab2/tab2.page.scss */
+.profile-container {
+    padding: 16px;
+  
+    .user-info {
+      text-align: center;
+      ion-avatar {
+        margin: auto;
+        display: block;
+        width: 80px;
+        height: 80px;
+      }
+      h2 {
+        font-size: 20px;
+        margin: 10px 0 5px;
+      }
+      p {
+        color: #888;
+      }
+    }
+  
+    .stats {
+      margin: 20px 0;
+      ion-card {
+        text-align: center;
+        ion-card-header {
+          font-weight: bold;
+        }
+      }
+    }
+  
+    .current-course {
+      margin-top: 20px;
+      ion-card {
+        ion-img {
+          border-radius: 8px;
+          height: 120px;
+          object-fit: cover;
+        }
+        ion-card-content {
+          text-align: left;
+        }
+      }
+    }
+  
+    .recent-sessions {
+      margin-top: 20px;
+      h3 {
+        font-weight: bold;
+      }
+      ion-scroll {
+        display: flex;
+        overflow-x: auto;
+        ion-card {
+          min-width: 120px;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+  

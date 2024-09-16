@@ -12,10 +12,11 @@ import { LoginComponent } from './login/login.page'; // Ensure this import point
 import { FormsModule } from '@angular/forms'; // Add FormsModule if using ngModel in templates
 import { RegisterComponent } from './register/register.component';
 import { Tab1Page } from './tab1/tab1.page';
+import { Tab2Page } from './tab2/tab2.page';
 import { UpdateProfileComponent } from './update-profile/update-profile.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, RegisterComponent, Tab1Page, UpdateProfileComponent], // Ensure LoginComponent is correctly declared
+  declarations: [AppComponent, LoginComponent, RegisterComponent, Tab1Page, Tab2Page, UpdateProfileComponent], // Ensure LoginComponent is correctly declared
   imports: [
     BrowserModule,
     IonicModule.forRoot(), // Use IonicModule.forRoot to set up Ionic app defaults
