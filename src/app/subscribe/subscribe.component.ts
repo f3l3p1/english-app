@@ -1,4 +1,4 @@
-// src/app/subscribe/subscribe.page.ts
+// src/app/subscribe/subscribe.component.ts
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 

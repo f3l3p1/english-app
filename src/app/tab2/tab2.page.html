@@ -16,45 +16,48 @@
       <ion-avatar>
         <img [src]="user.photoURL || 'assets/images/9187604.png'" alt="User Icon">
       </ion-avatar>
-      <h2>{{ user.displayName }}</h2>
+      <h2>{{ user.displayName || 'User' }}</h2> <!-- Use fallback if displayName is null -->
       <p>{{ user.email }}</p>
     </div>
 
-    <div class="stats">
+    <!-- Displaying User Stats -->
+    <div class="stats" *ngIf="stats">
       <ion-card>
         <ion-row>
           <ion-col>
             <ion-icon name="document-text-outline" color="danger"></ion-icon>
-            <p>21</p>
+            <p>{{ stats.clasesCompletadas }}</p>
             <small>Clases Completadas</small>
           </ion-col>
           <ion-col>
             <ion-icon name="clipboard-outline" color="danger"></ion-icon>
-            <p>15</p>
+            <p>{{ stats.tareasCompletadas }}</p>
             <small>Tareas Completadas</small>
           </ion-col>
           <ion-col>
             <ion-icon name="trophy-outline" color="danger"></ion-icon>
-            <p>5</p>
+            <p>{{ stats.logros }}</p>
             <small>Logros</small>
           </ion-col>
         </ion-row>
       </ion-card>
     </div>
 
-    <div class="current-course">
+    <!-- Displaying Current Course -->
+    <div class="current-course" *ngIf="currentCourse">
       <ion-card>
         <ion-img [src]="currentCourse.image"></ion-img>
         <ion-card-content>
           <h3>{{ currentCourse.title }}</h3>
           <p>{{ currentCourse.description }}</p>
           <ion-button expand="block" fill="clear" color="primary">Ver más</ion-button>
-          <ion-progress-bar value="currentCourse.progress / 100"></ion-progress-bar>
+          <ion-progress-bar [value]="currentCourse.progress / 100"></ion-progress-bar>
         </ion-card-content>
       </ion-card>
     </div>
 
-    <div class="recent-sessions">
+    <!-- Displaying Recent Sessions -->
+    <div class="recent-sessions" *ngIf="recentSessions">
       <h3>Últimas sesiones <ion-icon name="book-outline"></ion-icon></h3>
       <ion-scroll scrollX="true">
         <ion-card *ngFor="let session of recentSessions">

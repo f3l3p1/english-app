@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { environment } from '../environments/environment';
+import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireStorage, AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -26,6 +27,7 @@ import { LessonsPage } from './lessons/lessons.page';
     AngularFireModule.initializeApp(environment.firebase), // Initialize Firebase with environment config
     AngularFireAuthModule,
     AngularFireStorageModule,
+    AngularFirestoreModule,
     FormsModule, // Import FormsModule if using ngModel
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA], // Allow Ionic Web Components
