@@ -4,50 +4,36 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-padding login-content">
-  <!-- Logo and Background -->
+<ion-content [fullscreen]="true" class="login-content">
   <div class="background-pattern">
+    <img src="assets/images/fondo.png" alt="Background Pattern" class="background-fill" />
     <img src="assets/images/logo2.png" alt="App Logo" class="app-logo" />
   </div>
 
-  <!-- Login Form -->
-  <ion-card class="login-card">
-    <ion-card-header>
-      <ion-card-title>Welcome to English Tea</ion-card-title>
-    </ion-card-header>
+  <div class="login-card">
+    <h1>ENGLISH TEA</h1>
+    <p>Identifícate para continuar</p>
 
-    <ion-card-content>
-      <!-- Email Input -->
-      <ion-item lines="none">
-        <ion-label position="stacked">Email</ion-label>
-        <ion-input type="email" [(ngModel)]="email" placeholder="Enter your email"></ion-input>
-      </ion-item>
+    <ion-item lines="none" class="input-item">
+      <ion-label position="stacked">USUARIO</ion-label>
+      <ion-input type="text" [(ngModel)]="email" placeholder="Nombre de Usuario"></ion-input>
+    </ion-item>
 
-      <!-- Password Input -->
-      <ion-item lines="none" class="input-item">
-        <ion-label position="stacked">Password</ion-label>
-        <ion-input type="password" [(ngModel)]="password" placeholder="Enter your password"></ion-input>
-      </ion-item>
+    <ion-item lines="none" class="input-item">
+      <ion-label position="stacked">CONTRASEÑA</ion-label>
+      <ion-input type="password" [(ngModel)]="password" placeholder="••••••"></ion-input>
+    </ion-item>
 
-      <!-- Login Button -->
-      <ion-button expand="block" (click)="login()" shape="round" class="login-button">
-        Log In
-      </ion-button>
+    <ion-button (click)="login()" shape="round" expand="block" class="login-button">Entrar</ion-button>
 
-      <!-- Google Sign-In Button -->
-      <ion-button expand="block" color="danger" (click)="signInWithGoogle()" shape="round">
-        Sign In with Google
-      </ion-button>
+    <ion-text color="medium" class="forgot-password" (click)="forgotPassword()">
+      ¿Olvidaste tu contraseña?
+    </ion-text>
 
-      <!-- Forgot Password Link -->
-      <ion-text color="medium" class="forgot-password" (click)="forgotPassword()">
-        Forgot your password?
-      </ion-text>
+    <ion-button fill="clear" color="primary" (click)="navigateToRegister()">Register</ion-button>
 
-      <!-- Error Message Display -->
-      <div *ngIf="errorMessage" class="error-message">
-        <p>{{ errorMessage }}</p>
-      </div>
-    </ion-card-content>
-  </ion-card>
+    <div *ngIf="errorMessage" class="error-message">
+      <p>{{ errorMessage }}</p>
+    </div>
+  </div>
 </ion-content>

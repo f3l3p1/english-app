@@ -9,9 +9,10 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './login/login.page'; // Ensure this import points to the correct location
 import { FormsModule } from '@angular/forms'; // Add FormsModule if using ngModel in templates
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent], // Ensure LoginComponent is correctly declared
+  declarations: [AppComponent, LoginComponent, RegisterComponent], // Ensure LoginComponent is correctly declared
   imports: [
     BrowserModule,
     IonicModule.forRoot(), // Use IonicModule.forRoot to set up Ionic app defaults

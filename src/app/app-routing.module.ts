@@ -1,4 +1,3 @@
-// app-routing.module.ts
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -8,6 +7,10 @@ const routes: Routes = [
     loadChildren: () => import('./login/login.module').then(m => m.LoginModule),
   },
   {
+    path: 'register',
+    loadChildren: () => import('./register/register.module').then(m => m.RegisterModule),
+  },
+  {
     path: 'tabs',
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule),
   },
@@ -15,7 +18,11 @@ const routes: Routes = [
     path: '', 
     redirectTo: '/login', 
     pathMatch: 'full' 
-  }
+  },
+  { 
+    path: '**', 
+    redirectTo: '/login' 
+  } // Handle 404 with a wildcard route
 ];
 
 @NgModule({

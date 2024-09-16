@@ -1,0 +1,53 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="navigateToLogin()">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Registrarse</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="register-content">
+  <div class="background-pattern">
+    <img src="assets/images/fondo.png" alt="Background Pattern" class="background-fill" />
+  </div>
+
+  <!-- Registration Card Section -->
+  <div class="register-card">
+    <h1>Registrarse</h1>
+    <p>¿Ya estás registrado? <a (click)="navigateToLogin()">Entra aquí</a></p>
+
+    <form (ngSubmit)="register()" #registerForm="ngForm">
+      <ion-item lines="none" class="input-item">
+        <ion-label position="stacked">NOMBRE</ion-label>
+        <ion-input type="text" [(ngModel)]="name" name="name" required></ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="input-item">
+        <ion-label position="stacked">NOMBRE DE USUARIO</ion-label>
+        <ion-input type="text" [(ngModel)]="username" name="username" required></ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="input-item">
+        <ion-label position="stacked">EMAIL</ion-label>
+        <ion-input type="email" [(ngModel)]="email" name="email" required></ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="input-item">
+        <ion-label position="stacked">CONTRASEÑA</ion-label>
+        <ion-input type="password" [(ngModel)]="password" name="password" required></ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="input-item">
+        <ion-label position="stacked">CONFIRMAR CONTRASEÑA</ion-label>
+        <ion-input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" required></ion-input>
+      </ion-item>
+
+      <ion-button expand="block" type="submit" [disabled]="!registerForm.valid" class="register-button">
+        Registrarse
+      </ion-button>
+    </form>
+  </div>
+</ion-content>
