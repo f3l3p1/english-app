@@ -17,7 +17,15 @@ const routes: Routes = [
   },
   {
     path: 'subscribe/:id',
-    loadChildren: () => import('./subscribe/suscribe.module').then(m => m.SubscribePageModule),
+    loadChildren: () => import('./subscribe/subscribe.module').then(m => m.SubscribePageModule),
+  },
+  {
+    path: 'lessons/:id',
+    loadChildren: () => import('./lessons/lessons.module').then(m => m.LessonsPageModule),
+  },
+  {
+    path: 'update-profile',
+    loadChildren: () => import('./update-profile/update-profile.module').then(m => m.UpdateProfileModule),
   },
   {
     path: '',

@@ -1,0 +1,27 @@
+<!-- src/app/lessons/lessons.page.html -->
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>My Lessons</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="goToUpdateProfile()">
+        <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="lessons-grid">
+    <ion-card *ngFor="let lesson of lessons" [ngClass]="{'special-lesson': lesson.level === 2}">
+      <ion-card-header>
+        <ion-card-title>{{ lesson.level }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>{{ lesson.title }}</p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

@@ -1,0 +1,23 @@
+/* src/app/lessons/lessons.page.scss */
+.lessons-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    padding: 16px;
+  
+    ion-card {
+      text-align: center;
+      background-color: #007bff;
+      color: #ffffff;
+  
+      &.special-lesson {
+        background-color: #ffc107; /* Yellow for level 2 lessons */
+      }
+  
+      ion-card-title {
+        font-size: 22px;
+        font-weight: bold;
+      }
+    }
+  }
+  

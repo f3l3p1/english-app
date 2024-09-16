@@ -1,5 +1,5 @@
 // src/app/tab3/tab3.page.ts
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   templateUrl: './tab3.page.html',
   styleUrls: ['./tab3.page.scss'],
 })
-export class Tab3Page implements OnInit {
+export class Tab3Page {
   courses = [
     { id: 1, title: 'New Comers', description: 'Primera etapa donde podrás comenzar mejorando tu vocabulario', image: 'assets/images/newcomers.webp' },
     { id: 2, title: 'Novices', description: 'Segunda etapa que consta de tres pasos...', image: 'assets/images/novices.jpg' },
@@ -17,13 +17,12 @@ export class Tab3Page implements OnInit {
 
   constructor(private router: Router) {}
 
-  ngOnInit() {}
-
+  // Add the goToUpdateProfile method here
   goToUpdateProfile() {
     this.router.navigate(['/update-profile']);
   }
 
   viewMore(courseId: number) {
-    this.router.navigate([`/subscribe`, courseId]); // Navigate to the Subscribe page with the course ID
+    this.router.navigate(['/subscribe', courseId]);
   }
 }

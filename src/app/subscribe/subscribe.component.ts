@@ -1,7 +1,6 @@
 // src/app/subscribe/subscribe.page.ts
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-subscribe',
@@ -25,11 +24,20 @@ export class SubscribePage implements OnInit {
     this.course = this.courses.find(course => course.id === courseId);
   }
 
+  // Method to navigate to the lessons page
+  viewLessons(courseId: number) {
+    this.router.navigate(['/lessons', courseId]);
+  }
+
+  // Method to navigate back to Tab3 page
   cancel() {
     this.router.navigate(['/tabs/tab3']);
   }
 
+  // Method to subscribe and then navigate to lessons
   subscribe() {
     alert(`Subscribed to ${this.course.title}`);
+    // Navigate directly to the lessons page after subscribing
+    this.viewLessons(this.course.id);
   }
 }
