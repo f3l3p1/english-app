@@ -1,0 +1,91 @@
+.dashboard-container {
+    padding: 16px;
+  
+    .user-info {
+      text-align: center;
+      ion-avatar {
+        margin: auto;
+        display: block;
+        width: 80px;
+        height: 80px;
+      }
+      h2 {
+        font-size: 24px;
+        margin: 8px 0 4px;
+      }
+      p {
+        color: #888;
+        font-size: 14px;
+      }
+    }
+  
+    .stats {
+      margin: 20px 0;
+      ion-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        ion-icon {
+          font-size: 24px;
+        }
+      }
+    }
+  
+    .courses {
+      margin-top: 20px;
+      h3 {
+        display: inline-block;
+        font-weight: bold;
+      }
+      ion-button {
+        font-size: 14px;
+        color: red;
+      }
+      ion-scroll {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: scroll;
+        ion-card {
+          flex: 0 0 auto;
+          width: 150px;
+          margin-right: 10px;
+          ion-img {
+            border-radius: 8px;
+            height: 120px;
+            object-fit: cover;
+          }
+        }
+      }
+    }
+  
+    .news {
+      margin-top: 20px;
+      h3 {
+        display: inline-block;
+        font-weight: bold;
+      }
+      ion-button {
+        font-size: 14px;
+        color: red;
+      }
+      ion-card {
+        ion-img {
+          border-radius: 8px;
+          height: 120px;
+          object-fit: cover;
+        }
+        ion-card-content {
+          text-align: left;
+          ion-row {
+            margin-top: 10px;
+            ion-col {
+              display: flex;
+              align-items: center;
+            }
+          }
+        }
+      }
+    }
+  }
+  

@@ -1,20 +1,24 @@
-import { IonicModule } from '@ionic/angular';
+// src/app/tab1/tab1.module.ts
 import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Tab1Page } from './tab1.page';
-import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
+// Import other necessary modules
 
-import { Tab1PageRoutingModule } from './tab1-routing.module';
+const routes: Routes = [
+  {
+    path: '',
+    component: Tab1Page, // Ensure routing is correct
+  },
+];
 
 @NgModule({
   imports: [
-    IonicModule,
     CommonModule,
     FormsModule,
-    ExploreContainerComponentModule,
-    Tab1PageRoutingModule
+    RouterModule.forChild(routes), // Use forChild for child routes
   ],
-  declarations: [Tab1Page]
+  // Remove Tab1Page from declarations here
 })
 export class Tab1PageModule {}

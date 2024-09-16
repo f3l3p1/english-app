@@ -1,17 +1,68 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 1
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="dashboard-container">
+  <!-- User Information -->
+  <div class="user-info" *ngIf="user$ | async as user">
+    <ion-avatar>
+      <img src="assets/images/9187604.png" alt="User Avatar">
+    </ion-avatar>
+    <h2>{{ user.displayName || 'Victoria' }}</h2>
+    <p>{{ user.email || 'victoriahg@et.cl' }}</p>
+  </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <!-- Stats Section -->
+  <div class="stats">
+    <ion-card>
+      <ion-row>
+        <ion-col>
+          <ion-icon name="document-outline" color="danger"></ion-icon>
+          <ion-card-header>21</ion-card-header>
+          <ion-card-subtitle>Clases Completadas</ion-card-subtitle>
+        </ion-col>
+        <ion-col>
+          <ion-icon name="clipboard-outline" color="danger"></ion-icon>
+          <ion-card-header>15</ion-card-header>
+          <ion-card-subtitle>Tareas Completadas</ion-card-subtitle>
+        </ion-col>
+        <ion-col>
+          <ion-icon name="trophy-outline" color="danger"></ion-icon>
+          <ion-card-header>5</ion-card-header>
+          <ion-card-subtitle>Logros</ion-card-subtitle>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+  </div>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <!-- Courses Section -->
+  <div class="courses">
+    <h3>Cursos</h3>
+    <ion-button fill="clear" slot="end">Ver todos</ion-button>
+    <ion-scroll scrollX="true">
+      <ion-card *ngFor="let course of courses">
+        <ion-img [src]="course.image"></ion-img>
+        <ion-card-content>
+          <h2>{{ course.title }}</h2>
+        </ion-card-content>
+      </ion-card>
+    </ion-scroll>
+  </div>
+
+  <!-- News Section -->
+  <div class="news">
+    <h3>Novedades</h3>
+    <ion-button fill="clear" slot="end">Ver todos</ion-button>
+    <ion-card>
+      <ion-img src="assets/images/novices.jpg"></ion-img>
+      <ion-card-content>
+        <h2>English Tea</h2>
+        <p>Estudiantes de English Tea realizan primera "Students' Meeting".</p>
+        <ion-row>
+          <ion-col>
+            <ion-icon name="person-outline"></ion-icon> 256
+          </ion-col>
+          <ion-col>
+            <ion-icon name="star-outline"></ion-icon> 354
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>
