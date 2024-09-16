@@ -1,7 +1,6 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <!-- Back button to navigate back to lessons -->
       <ion-button (click)="goBackToLessons()">
         <ion-icon name="arrow-back-outline"></ion-icon> Back
       </ion-button>
@@ -51,6 +50,16 @@
           <ion-icon name="clipboard-outline"></ion-icon>
           <h2>Task</h2>
           <p>Complete worksheet</p>
+        </ion-card-header>
+      </ion-card>
+    </div>
+
+    <div class="panel red-panel" (click)="navigateTo('materials')">
+      <ion-card>
+        <ion-card-header>
+          <ion-icon name="book-outline"></ion-icon>
+          <h2>Materials</h2>
+          <p>Learning resources</p>
         </ion-card-header>
       </ion-card>
     </div>

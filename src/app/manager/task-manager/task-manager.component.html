@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Task Manager</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="manager-container">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Create New Task</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-input placeholder="Task Title" [(ngModel)]="taskTitle"></ion-input>
+        <ion-textarea placeholder="Task Description" [(ngModel)]="taskDescription"></ion-textarea>
+        <ion-button expand="block" (click)="addTask()">Add Task</ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-list>
+      <ion-item *ngFor="let task of tasks">
+        <ion-label>
+          <h2>{{ task.title }}</h2>
+          <p>{{ task.description }}</p>
+        </ion-label>
+        <ion-button fill="clear" slot="end" color="danger" (click)="deleteTask(task.id)">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

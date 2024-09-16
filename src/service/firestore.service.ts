@@ -1,6 +1,7 @@
 // src/service/firestore.service.ts
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFireStorage } from '@angular/fire/compat/storage'; // Correctly import AngularFireStorage
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
@@ -36,15 +37,18 @@ interface UserDocument {
 export class FirestoreService {
   private coursesOrder: string[] = ['newcomers', 'novices', 'transitionals', 'skilled'];
 
-  constructor(private firestore: AngularFirestore) {}
+  constructor(
+    private firestore: AngularFirestore,
+    private storage: AngularFireStorage // Correctly inject AngularFireStorage
+  ) {}
 
   // Fetch user stats
   getUserStats(userId: string): Observable<UserStats> {
     return this.firestore.collection('users').doc<UserDocument>(userId).valueChanges().pipe(
       map(user => user?.stats || { clasesCompletadas: 0, tareasCompletadas: 0, logros: 0 }),
-      catchError(error => {
+      catchError((error: any) => {
         console.error('Error fetching user stats:', error);
-        throw error;
+        return of({ clasesCompletadas: 0, tareasCompletadas: 0, logros: 0 });
       })
     );
   }
@@ -53,9 +57,9 @@ export class FirestoreService {
   getCurrentCourse(userId: string): Observable<CurrentCourse | null> {
     return this.firestore.collection('users').doc<UserDocument>(userId).valueChanges().pipe(
       map(user => user?.currentCourse || null),
-      catchError(error => {
+      catchError((error: any) => {
         console.error('Error fetching current course:', error);
-        throw error;
+        return of(null);
       })
     );
   }
@@ -63,7 +67,7 @@ export class FirestoreService {
   // Fetch recent sessions
   getRecentSessions(userId: string): Observable<RecentSession[]> {
     return this.firestore.collection('users').doc(userId).collection<RecentSession>('sessions', ref => ref.orderBy('date', 'desc')).valueChanges().pipe(
-      catchError(error => {
+      catchError((error: any) => {
         console.error('Error fetching recent sessions:', error);
         throw error;
       })
@@ -87,7 +91,7 @@ export class FirestoreService {
         // Check if all lessons for the current course are completed
         return this.hasCompletedAllLessons(currentCourse, completedLessons);
       }),
-      catchError(error => {
+      catchError((error: any) => {
         console.error('Error checking subscription eligibility:', error);
         return of(false);
       })
@@ -119,7 +123,7 @@ export class FirestoreService {
       }
     }).then(() => {
       console.log(`Assigned course ${course.title} to user ${userId}`);
-    }).catch(error => {
+    }).catch((error: any) => {
       console.error('Error assigning course:', error);
       throw error;
     });
@@ -131,7 +135,7 @@ export class FirestoreService {
       'stats.clasesCompletadas': completedLessons,
       'stats.tareasCompletadas': completedTasks,
       'stats.logros': achievements
-    }).catch(error => {
+    }).catch((error: any) => {
       console.error('Error updating user stats:', error);
       throw error;
     });
@@ -144,8 +148,89 @@ export class FirestoreService {
       date: new Date()
     }).then(() => {
       console.log('Session added successfully');
-    }).catch(error => {
+    }).catch((error: any) => {
       console.error('Error updating recent sessions:', error);
+      throw error;
+    });
+  }
+
+  // Add Audio to a Lesson
+  addAudio(lessonId: string, audioFile: File): Promise<void> {
+    const filePath = `lessons/${lessonId}/audios/${audioFile.name}`;
+    const fileRef = this.storage.ref(filePath);
+    return this.storage.upload(filePath, audioFile)
+      .then(() => fileRef.getDownloadURL().toPromise())
+      .then((url: string) => {
+        return this.firestore.collection(`lessons/${lessonId}/audios`).add({
+          url,
+          name: audioFile.name,
+          createdAt: new Date(),
+        });
+      })
+      .then(() => {
+        console.log('Audio added successfully');
+      })
+      .catch((error: any) => {
+        console.error('Error adding audio:', error);
+        throw error;
+      });
+  }
+
+  // Add Video to a Lesson
+  addVideo(lessonId: string, videoFile: File): Promise<void> {
+    const filePath = `lessons/${lessonId}/videos/${videoFile.name}`;
+    const fileRef = this.storage.ref(filePath);
+    return this.storage.upload(filePath, videoFile)
+      .then(() => fileRef.getDownloadURL().toPromise())
+      .then((url: string) => {
+        return this.firestore.collection(`lessons/${lessonId}/videos`).add({
+          url,
+          name: videoFile.name,
+          createdAt: new Date(),
+        });
+      })
+      .then(() => {
+        console.log('Video added successfully');
+      })
+      .catch((error: any) => {
+        console.error('Error adding video:', error);
+        throw error;
+      });
+  }
+
+  // Add Material to a Lesson
+  addMaterial(lessonId: string, materialFile: File): Promise<void> {
+    const filePath = `lessons/${lessonId}/materials/${materialFile.name}`;
+    const fileRef = this.storage.ref(filePath);
+    return this.storage.upload(filePath, materialFile)
+      .then(() => fileRef.getDownloadURL().toPromise())
+      .then((url: string) => {
+        return this.firestore.collection(`lessons/${lessonId}/materials`).add({
+          url,
+          name: materialFile.name,
+          createdAt: new Date(),
+        });
+      })
+      .then(() => {
+        console.log('Material added successfully');
+      })
+      .catch((error: any) => {
+        console.error('Error adding material:', error);
+        throw error;
+      });
+  }
+
+  // Add Task to a Lesson
+  addTask(lessonId: string, task: any): Promise<void> {
+    return this.firestore.collection(`lessons/${lessonId}/tasks`).add({
+      ...task,
+      createdAt: new Date(),
+    })
+    .then(() => {
+      console.log('Task added successfully');
+    })
+    .catch((error: any) => {
+      console.error('Error adding task:', error);
       throw error;
     });
   }

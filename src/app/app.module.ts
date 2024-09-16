@@ -18,9 +18,14 @@ import { UpdateProfileComponent } from './update-profile/update-profile.componen
 import { SubscribePage } from './subscribe/subscribe.component';
 import { LessonsPage } from './lessons/lessons.page';
 import { LessonDashboardComponent } from './lesson-dashboard/lesson-dashboard.component';
+import { AudioManagerComponent } from './manager/audio-manager/audio-manager.component';
+import { MaterialManagerComponent } from './manager/material-manager/material-manager.component';
+import { VideoManagerComponent } from './manager/video-manager/video-manager.component';
+import { TaskManagerComponent } from './manager/task-manager/task-manager.component';
+
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, RegisterComponent, Tab1Page, Tab2Page, UpdateProfileComponent, SubscribePage, LessonsPage, LessonDashboardComponent], // Ensure LoginComponent is correctly declared
+  declarations: [AppComponent, LoginComponent, RegisterComponent, Tab1Page, Tab2Page, UpdateProfileComponent, SubscribePage, LessonsPage, LessonDashboardComponent, AudioManagerComponent, VideoManagerComponent, TaskManagerComponent, MaterialManagerComponent], // Ensure LoginComponent is correctly declared
   imports: [
     BrowserModule,
     IonicModule.forRoot(), // Use IonicModule.forRoot to set up Ionic app defaults

@@ -32,6 +32,22 @@ const routes: Routes = [
     loadChildren: () => import('./update-profile/update-profile.module').then(m => m.UpdateProfileModule),
   },
   {
+    path: 'audio-manager',
+    loadChildren: () => import('./manager/audio-manager/audio-manager.module').then(m => m.AudioManagerModule),
+  },
+  {
+    path: 'video-manager',
+    loadChildren: () => import('./manager/video-manager/video-manager.module').then(m => m.VideoManagerModule),
+  },
+  {
+    path: 'task-manager',
+    loadChildren: () => import('./manager/task-manager/task-manager.module').then(m => m.TaskManagerModule),
+  },
+  {
+    path: 'material-manager',
+    loadChildren: () => import('./manager/material-manager/material-manager.module').then(m => m.MaterialManagerModule),
+  },
+  {
     path: '',
     redirectTo: '/login',
     pathMatch: 'full',

@@ -21,13 +21,16 @@ export class LessonDashboardComponent implements OnInit {
         alert('Online sessions coming soon!');
         break;
       case 'audio':
-        alert('Audio content');
+        this.router.navigate(['/audio-manager']);
         break;
       case 'video':
-        alert('Video content');
+        this.router.navigate(['/video-manager']);
         break;
       case 'tasks':
-        alert('Tasks section');
+        this.router.navigate(['/task-manager']);
+        break;
+      case 'materials':
+        this.router.navigate(['/material-manager']);
         break;
       default:
         break;
@@ -38,8 +41,8 @@ export class LessonDashboardComponent implements OnInit {
     this.router.navigate(['/update-profile']);
   }
 
-  // Add this method for back navigation
+  // Update this method to navigate back to the Lessons page
   goBackToLessons() {
-    this.router.navigate(['/lessons']); // Adjust path if needed
+    this.router.navigate(['/lessons']);  // Ensure the correct path to Lessons
   }
 }
