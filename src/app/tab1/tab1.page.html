@@ -1,68 +1,72 @@
-<ion-content class="dashboard-container">
-  <!-- User Information -->
-  <div class="user-info" *ngIf="user$ | async as user">
-    <ion-avatar>
-      <img src="assets/images/9187604.png" alt="User Avatar">
-    </ion-avatar>
-    <h2>{{ user.displayName || 'Victoria' }}</h2>
-    <p>{{ user.email || 'victoriahg@et.cl' }}</p>
-  </div>
+<!-- src/app/tab1/tab1.page.html -->
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Dashboard</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="goToUpdateProfile()">
+        <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
-  <!-- Stats Section -->
-  <div class="stats">
-    <ion-card>
-      <ion-row>
-        <ion-col>
-          <ion-icon name="document-outline" color="danger"></ion-icon>
-          <ion-card-header>21</ion-card-header>
-          <ion-card-subtitle>Clases Completadas</ion-card-subtitle>
-        </ion-col>
-        <ion-col>
-          <ion-icon name="clipboard-outline" color="danger"></ion-icon>
-          <ion-card-header>15</ion-card-header>
-          <ion-card-subtitle>Tareas Completadas</ion-card-subtitle>
-        </ion-col>
-        <ion-col>
-          <ion-icon name="trophy-outline" color="danger"></ion-icon>
-          <ion-card-header>5</ion-card-header>
-          <ion-card-subtitle>Logros</ion-card-subtitle>
-        </ion-col>
-      </ion-row>
-    </ion-card>
-  </div>
+<ion-content>
+  <div class="dashboard-container">
+    <div class="user-info" *ngIf="user$ | async as user">
+      <ion-avatar>
+        <img [src]="user.photoURL || 'assets/images/9187604.png'" alt="User Icon">
+      </ion-avatar>
+      <h2>{{ user.displayName || 'User' }}</h2> <!-- Use fallback if displayName is null -->
+      <p>{{ user.email }}</p>
+    </div>
 
-  <!-- Courses Section -->
-  <div class="courses">
-    <h3>Cursos</h3>
-    <ion-button fill="clear" slot="end">Ver todos</ion-button>
-    <ion-scroll scrollX="true">
-      <ion-card *ngFor="let course of courses">
-        <ion-img [src]="course.image"></ion-img>
-        <ion-card-content>
-          <h2>{{ course.title }}</h2>
-        </ion-card-content>
-      </ion-card>
-    </ion-scroll>
-  </div>
-
-  <!-- News Section -->
-  <div class="news">
-    <h3>Novedades</h3>
-    <ion-button fill="clear" slot="end">Ver todos</ion-button>
-    <ion-card>
-      <ion-img src="assets/images/novices.jpg"></ion-img>
-      <ion-card-content>
-        <h2>English Tea</h2>
-        <p>Estudiantes de English Tea realizan primera "Students' Meeting".</p>
+    <div class="stats">
+      <ion-card>
         <ion-row>
           <ion-col>
-            <ion-icon name="person-outline"></ion-icon> 256
+            <ion-icon name="document-text-outline" color="danger"></ion-icon>
+            <p>21</p>
+            <small>Clases Completadas</small>
           </ion-col>
           <ion-col>
-            <ion-icon name="star-outline"></ion-icon> 354
+            <ion-icon name="clipboard-outline" color="danger"></ion-icon>
+            <p>15</p>
+            <small>Tareas Completadas</small>
+          </ion-col>
+          <ion-col>
+            <ion-icon name="trophy-outline" color="danger"></ion-icon>
+            <p>5</p>
+            <small>Logros</small>
           </ion-col>
         </ion-row>
-      </ion-card-content>
-    </ion-card>
+      </ion-card>
+    </div>
+
+    <div class="courses">
+      <h3>Cursos <ion-button size="small" fill="clear">Ver todos</ion-button></h3>
+      <ion-scroll scrollX="true">
+        <ion-card *ngFor="let course of courses">
+          <ion-img [src]="course.image"></ion-img>
+          <ion-card-content>
+            <h3>{{ course.title }}</h3>
+          </ion-card-content>
+        </ion-card>
+      </ion-scroll>
+    </div>
+
+    <div class="news">
+      <h3>Novedades <ion-icon name="newspaper-outline"></ion-icon> <ion-button size="small" fill="clear">Ver todos</ion-button></h3>
+      <ion-card>
+        <ion-img src="assets/images/news-image.jpg"></ion-img>
+        <ion-card-content>
+          <h3>English Tea News</h3>
+          <p>Estudiantes de English Tea realizan primera "Students' Meeting".</p>
+          <div>
+            <ion-icon name="person-outline"></ion-icon> 256
+            <ion-icon name="star-outline"></ion-icon> 354
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
   </div>
 </ion-content>

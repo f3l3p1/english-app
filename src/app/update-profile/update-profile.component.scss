@@ -1,0 +1,56 @@
+.update-profile-container {
+    --background: #f8f9fa;
+  
+    .profile-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
+  
+      ion-avatar {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 10px;
+      }
+  
+      h2 {
+        font-size: 22px;
+        font-weight: bold;
+        margin: 0;
+      }
+  
+      p {
+        color: #7a7a7a;
+        margin: 0;
+      }
+    }
+  
+    .update-form-card {
+      margin: 0 20px;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      
+      ion-item {
+        margin-top: 10px;
+        ion-label {
+          font-size: 14px;
+          color: #555;
+        }
+      }
+  
+      ion-button {
+        margin-top: 20px;
+        --border-radius: 10px;
+        --background: #007bff;
+        --background-activated: #0056b3;
+      }
+  
+      .error-message {
+        color: red;
+        text-align: center;
+        margin-top: 10px;
+      }
+    }
+  }
+  

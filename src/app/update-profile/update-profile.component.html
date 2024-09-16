@@ -1,0 +1,50 @@
+<!-- src/app/update-profile/update-profile.component.html -->
+<ion-content class="update-profile-container">
+  <div class="profile-header">
+    <ion-avatar>
+      <img [src]="profilePictureUrl || 'assets/images/default-user-icon.png'" alt="Profile Picture">
+    </ion-avatar>
+    <h2>{{ displayName || 'User' }}</h2>
+    <p>{{ email }}</p>
+  </div>
+
+  <ion-card class="update-form-card">
+    <ion-card-header>
+      <ion-card-title>Actualizar datos</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input [(ngModel)]="displayName" placeholder="Nombre"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input [(ngModel)]="email" placeholder="Email"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Contraseña</ion-label>
+        <ion-input type="password" [(ngModel)]="password" placeholder="Contraseña"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Fecha de Nacimiento</ion-label>
+        <ion-datetime display-format="DD/MM/YYYY" [(ngModel)]="birthDate"></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Foto de perfil</ion-label>
+        <input type="file" (change)="onFileSelected($event)">
+      </ion-item>
+
+      <!-- Ensure the updateProfilePicture method is called with the URL -->
+      <ion-button expand="full" color="primary" (click)="updateProfilePicture(profilePictureUrl || '')">Subir Foto</ion-button>
+      <ion-button expand="full" color="primary" (click)="updateProfile()">Actualizar</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+</ion-content>

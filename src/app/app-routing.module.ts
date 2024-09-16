@@ -1,3 +1,4 @@
+// src/app/app-routing.module.ts
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -13,6 +14,10 @@ const routes: Routes = [
   {
     path: 'tabs',
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule),
+  },
+  {
+    path: 'update-profile', // Add this route for the update profile component
+    loadChildren: () => import('./update-profile/update-profile.module').then(m => m.UpdateProfileModule),
   },
   { 
     path: '', 
