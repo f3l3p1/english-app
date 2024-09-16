@@ -1,18 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/service/auth.service';
+import { AuthService } from 'src/service/auth.service'; // Ensure the correct path
 import { Router } from '@angular/router';
-
 
 @Component({
   selector: 'app-login',
- 
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss']
 })
 export class LoginComponent implements OnInit {
   email: string = '';
   password: string = '';
-  errorMessage: string | null = null;  // Add errorMessage property
+  errorMessage: string | null = null;
 
   constructor(private auth: AuthService, private router: Router) {}
 
@@ -24,7 +22,7 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.auth.login(this.email, this.password).catch((error) => {
-      this.errorMessage = error.message; // Store error message if login fails
+      this.errorMessage = error.message;
     });
   }
 
@@ -34,17 +32,18 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.auth.forgotPassword(this.email).catch((error) => {
-      this.errorMessage = error.message; // Store error message if forgot password fails
+      this.errorMessage = error.message;
     });
   }
 
   navigateToRegister() {
-    this.router.navigate(['/register']); // Method to navigate to the register page
+    this.router.navigate(['/register']);
   }
 
-  signInWithGoogle() {
+  // Correct method name to match HTML
+  googleSignIn() {
     this.auth.googleSignIn().catch((error) => {
-      this.errorMessage = error.message; // Store error message if Google sign-in fails
+      this.errorMessage = error.message;
     });
   }
 }
