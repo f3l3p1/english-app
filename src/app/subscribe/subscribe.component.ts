@@ -24,9 +24,9 @@ export class SubscribePage implements OnInit {
     this.course = this.courses.find(course => course.id === courseId);
   }
 
-  // Method to navigate to the lessons page
-  viewLessons(courseId: number) {
-    this.router.navigate(['/lessons', courseId]);
+  // Method to navigate to the lessons page with courseId and courseName
+  viewLessons(courseId: number, courseName: string) {
+    this.router.navigate(['/lessons', courseId, { courseName }]);
   }
 
   // Method to navigate back to Tab3 page
@@ -37,7 +37,7 @@ export class SubscribePage implements OnInit {
   // Method to subscribe and then navigate to lessons
   subscribe() {
     alert(`Subscribed to ${this.course.title}`);
-    // Navigate directly to the lessons page after subscribing
-    this.viewLessons(this.course.id);
+    // Navigate directly to the lessons page after subscribing with both courseId and courseName
+    this.viewLessons(this.course.id, this.course.title);
   }
 }

@@ -1,23 +1,41 @@
-/* src/app/lessons/lessons.page.scss */
-.lessons-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    padding: 16px;
-  
-    ion-card {
-      text-align: center;
-      background-color: #007bff;
-      color: #ffffff;
-  
-      &.special-lesson {
-        background-color: #ffc107; /* Yellow for level 2 lessons */
-      }
-  
-      ion-card-title {
-        font-size: 22px;
-        font-weight: bold;
-      }
-    }
-  }
-  
+.lessons-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+  padding: 15px;
+}
+
+.lesson-card {
+  position: relative; /* For positioning the level number badge */
+}
+
+.level-1 .lesson-card ion-card {
+  --background: #2196f3; /* Blue for Level 1 */
+  color: white !important; /* Ensuring font color is white */
+}
+
+.level-2 .lesson-card ion-card {
+  --background: #ffeb3b; /* Yellow for Level 2 */
+  color: white !important; /* Ensuring font color is white */
+}
+
+.level-3 .lesson-card ion-card {
+  --background: #4caf50; /* Green for Level 3 */
+  color: white !important; /* Ensuring font color is white */
+}
+
+.level-4 .lesson-card ion-card {
+  --background: #9c27b0; /* Purple for Level 4 */
+  color: white !important; /* Ensuring font color is white */
+}
+
+.level-number {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  padding: 5px;
+  font-size: 12px;
+  color: #000;
+}
