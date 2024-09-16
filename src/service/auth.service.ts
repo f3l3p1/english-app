@@ -1,3 +1,4 @@
+// src/app/services/auth.service.ts
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
@@ -41,11 +42,6 @@ export class AuthService {
       // Redirect to login page after logging out
       this.router.navigate(['/login']);
     });
-  }
-
-  // Check if a user is logged in
-  isLoggedIn(): boolean {
-    return this.afAuth.authState !== null;
   }
 
   // Sign in with Google

@@ -1,3 +1,4 @@
+// src/app/app.module.ts
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicModule } from '@ionic/angular';
@@ -6,18 +7,20 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { LoginComponent } from './login/login.page'; // Ensure correct import
+import { LoginComponent } from './login/login.page'; // Ensure this import points to the correct location
+import { FormsModule } from '@angular/forms'; // Add FormsModule if using ngModel in templates
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent], // Add LoginComponent here
+  declarations: [AppComponent, LoginComponent], // Ensure LoginComponent is correctly declared
   imports: [
     BrowserModule,
-    IonicModule.forRoot(), // Configure IonicModule
+    IonicModule.forRoot(), // Use IonicModule.forRoot to set up Ionic app defaults
     AppRoutingModule,
-    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireModule.initializeApp(environment.firebase), // Initialize Firebase with environment config
     AngularFireAuthModule,
+    FormsModule, // Import FormsModule if using ngModel
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA], // Add this to support Ionic elements
-  bootstrap: [AppComponent]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA], // Allow Ionic Web Components
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
