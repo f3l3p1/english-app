@@ -1,0 +1,26 @@
+<!-- src/app/subscribe/subscribe.page.html -->
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/tab3"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Subscribe</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [style.background-image]="'url(assets/images/course-background.jpg)'" class="subscribe-content">
+  <ion-card class="course-card">
+    <ion-item lines="none">
+      <ion-thumbnail slot="start">
+        <ion-img [src]="course.image"></ion-img>
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ course.title }}</h2>
+        <p>{{ course.description }}</p>
+        <p>Lessons: 20</p>
+      </ion-label>
+    </ion-item>
+    <ion-button expand="full" color="danger" (click)="subscribe()">Inscribir</ion-button>
+    <ion-button expand="full" color="medium" (click)="cancel()">Cancelar</ion-button>
+  </ion-card>
+</ion-content>

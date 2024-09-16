@@ -16,12 +16,8 @@ const routes: Routes = [
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule),
   },
   {
-    path: 'update-profile',  // Add the correct route to the update profile component
-    loadChildren: () => import('./update-profile/update-profile.module').then(m => m.UpdateProfileModule),
-  },
-  {
-    path: 'tab3',
-    loadChildren: () => import('./tab3/tab3.module').then(m => m.Tab3PageModule),
+    path: 'subscribe/:id',
+    loadChildren: () => import('./subscribe/suscribe.module').then(m => m.SubscribePageModule),
   },
   {
     path: '',
@@ -31,11 +27,11 @@ const routes: Routes = [
   {
     path: '**',
     redirectTo: '/login',
-  }
+  },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)], // Use forRoot in the main app routing module
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
