@@ -43,4 +43,9 @@ export class Tab2Page implements OnInit {
   goToUpdateProfile() {
     this.router.navigate(['/update-profile']);
   }
+
+  // New method to navigate to the lessons page
+  goToLessons(courseId: string, courseName: string) {
+    this.router.navigate(['/lessons', courseId, { courseName }]);
+  }
 }

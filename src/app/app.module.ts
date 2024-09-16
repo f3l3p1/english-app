@@ -17,9 +17,10 @@ import { Tab2Page } from './tab2/tab2.page';
 import { UpdateProfileComponent } from './update-profile/update-profile.component';
 import { SubscribePage } from './subscribe/subscribe.component';
 import { LessonsPage } from './lessons/lessons.page';
+import { LessonDashboardComponent } from './lesson-dashboard/lesson-dashboard.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, RegisterComponent, Tab1Page, Tab2Page, UpdateProfileComponent, SubscribePage, LessonsPage], // Ensure LoginComponent is correctly declared
+  declarations: [AppComponent, LoginComponent, RegisterComponent, Tab1Page, Tab2Page, UpdateProfileComponent, SubscribePage, LessonsPage, LessonDashboardComponent], // Ensure LoginComponent is correctly declared
   imports: [
     BrowserModule,
     IonicModule.forRoot(), // Use IonicModule.forRoot to set up Ionic app defaults

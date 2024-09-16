@@ -24,6 +24,10 @@ const routes: Routes = [
     loadChildren: () => import('./lessons/lessons.module').then(m => m.LessonsPageModule),
   },
   {
+    path: 'lesson-dashboard',
+    loadChildren: () => import('./lesson-dashboard/lesson-dashboard.module').then(m => m.LessonDashboardModule),
+  },
+  {
     path: 'update-profile',
     loadChildren: () => import('./update-profile/update-profile.module').then(m => m.UpdateProfileModule),
   },

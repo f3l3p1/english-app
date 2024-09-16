@@ -50,7 +50,10 @@
         <ion-card-content>
           <h3>{{ currentCourse.title }}</h3>
           <p>{{ currentCourse.description }}</p>
-          <ion-button expand="block" fill="clear" color="primary">Ver más</ion-button>
+          <!-- Modified button to call goToLessons() -->
+          <ion-button expand="block" fill="clear" color="primary" (click)="goToLessons(currentCourse.id, currentCourse.title)">
+            Ver más
+          </ion-button>
           <ion-progress-bar [value]="currentCourse.progress / 100"></ion-progress-bar>
         </ion-card-content>
       </ion-card>

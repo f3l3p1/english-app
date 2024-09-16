@@ -196,4 +196,13 @@ export class LessonsPage implements OnInit {
         return '';
     }
   }
+
+// Correct method to navigate to the lesson dashboard
+navigateToDashboard(lessonTitle: string) {
+  this.router.navigate(['/lesson-dashboard'], { queryParams: { title: lessonTitle } });
+}
+
+
+
+
 }

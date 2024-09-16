@@ -18,7 +18,7 @@
   <div class="lessons-container">
     <ng-container *ngFor="let level of levels">
       <div [ngClass]="'level-' + level.number" class="level-section">
-        <div class="lesson-card" *ngFor="let lesson of level.lessons">
+        <div class="lesson-card" *ngFor="let lesson of level.lessons" (click)="navigateToDashboard(lesson)">
           <ion-card>
             <ion-card-header>
               <ion-label class="level-number">{{ level.number }}</ion-label>

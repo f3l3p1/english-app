@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <!-- Back button to navigate back to lessons -->
+      <ion-button (click)="goBackToLessons()">
+        <ion-icon name="arrow-back-outline"></ion-icon> Back
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ lessonTitle }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="goToSettings()">
+        <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="dashboard-container">
+    <div class="panel" (click)="navigateTo('online')">
+      <ion-card>
+        <ion-card-header>
+          <ion-icon name="videocam-outline"></ion-icon>
+          <h2>Online Sessions</h2>
+          <p>Coming soon...</p>
+        </ion-card-header>
+      </ion-card>
+    </div>
+
+    <div class="panel" (click)="navigateTo('audio')">
+      <ion-card>
+        <ion-card-header>
+          <ion-icon name="musical-notes-outline"></ion-icon>
+          <h2>Audio</h2>
+        </ion-card-header>
+      </ion-card>
+    </div>
+
+    <div class="panel" (click)="navigateTo('video')">
+      <ion-card>
+        <ion-card-header>
+          <ion-icon name="play-outline"></ion-icon>
+          <h2>Video</h2>
+        </ion-card-header>
+      </ion-card>
+    </div>
+
+    <div class="panel" (click)="navigateTo('tasks')">
+      <ion-card>
+        <ion-card-header>
+          <ion-icon name="clipboard-outline"></ion-icon>
+          <h2>Task</h2>
+          <p>Complete worksheet</p>
+        </ion-card-header>
+      </ion-card>
+    </div>
+  </div>
+</ion-content>

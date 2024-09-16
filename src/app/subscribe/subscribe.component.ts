@@ -35,6 +35,19 @@ export class SubscribePage implements OnInit {
     this.authService.currentUser$.subscribe(user => {
       if (user) {
         this.userId = user.uid;
+        this.checkSubscriptionStatus(); // Check if the user is already subscribed
+      }
+    });
+  }
+
+  // Method to check if the user is already subscribed to the course
+  checkSubscriptionStatus() {
+    if (!this.userId) return;
+
+    this.firestoreService.getCurrentCourse(this.userId).subscribe(currentCourse => {
+      // If the user is already subscribed to the selected course, navigate directly to lessons
+      if (currentCourse && currentCourse.id === this.course.id) {
+        this.viewLessons(this.course.id, this.course.title);
       }
     });
   }
@@ -75,18 +88,17 @@ export class SubscribePage implements OnInit {
     });
   }
 
-  // Helper function to check if the user can subscribe to the next course
-  isEligibleForNextCourse(stats: { clasesCompletadas: number }): boolean {
-    // Define required lessons completed for each course
-    const requiredLessons: { [key: number]: number } = {
-      1: 0,   // New Comers can be subscribed without any prerequisites
-      2: 10,  // Number of lessons completed required to unlock Novices
-      3: 20,  // Required for Transitionals
-      4: 30   // Required for Skilled
-    };
+ // Helper function to check if the user can subscribe to the next course
+isEligibleForNextCourse(stats: { clasesCompletadas: number }): boolean {
+  // Define required lessons completed for each course with index signature
+  const requiredLessons: { [key: number]: number } = {
+    1: 0,   // New Comers can be subscribed without any prerequisites
+    2: 10,  // Number of lessons completed required to unlock Novices
+    3: 20,  // Required for Transitionals
+    4: 30   // Required for Skilled
+  };
 
-    // Check if the user's completed lessons meet the requirement for the current course
-    // Use type assertion to cast this.course.id to a key type compatible with requiredLessons
-    return stats.clasesCompletadas >= requiredLessons[this.course.id as keyof typeof requiredLessons];
-  }
+  // Check if the user's completed lessons meet the requirement for the current course
+  return stats.clasesCompletadas >= requiredLessons[this.course.id - 1];
+}
 }
