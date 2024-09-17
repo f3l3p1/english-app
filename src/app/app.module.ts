@@ -22,10 +22,12 @@ import { AudioManagerComponent } from './manager/audio-manager/audio-manager.com
 import { MaterialManagerComponent } from './manager/material-manager/material-manager.component';
 import { VideoManagerComponent } from './manager/video-manager/video-manager.component';
 import { TaskManagerComponent } from './manager/task-manager/task-manager.component';
+import { FeedbackFormComponent } from './feedback-form/feedback-form.component';
+import { FeedbackListComponent } from './feedback-list/feedback-list.component';
 
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, RegisterComponent, Tab1Page, Tab2Page, UpdateProfileComponent, SubscribePage, LessonsPage, LessonDashboardComponent, AudioManagerComponent, VideoManagerComponent, TaskManagerComponent, MaterialManagerComponent], // Ensure LoginComponent is correctly declared
+  declarations: [AppComponent, LoginComponent, RegisterComponent, Tab1Page, Tab2Page, UpdateProfileComponent, SubscribePage, LessonsPage, LessonDashboardComponent, AudioManagerComponent, VideoManagerComponent, TaskManagerComponent, MaterialManagerComponent, FeedbackFormComponent, FeedbackListComponent], // Ensure LoginComponent is correctly declared
   imports: [
     BrowserModule,
     IonicModule.forRoot(), // Use IonicModule.forRoot to set up Ionic app defaults

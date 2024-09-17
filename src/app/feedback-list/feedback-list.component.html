@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Feedbacks</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let feedback of feedbacks">
+      <ion-label>
+        <h2>{{ feedback.name }}</h2>
+        <p>{{ feedback.description }}</p>
+        <small>{{ feedback.date.toDate() | date }}</small>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

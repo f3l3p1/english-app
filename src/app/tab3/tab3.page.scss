@@ -1,6 +1,6 @@
 /* src/app/tab3/tab3.page.scss */
 ion-content {
-    --background: none; /* Remove default background */
+    --background: none; /* Remove default background color */
   }
   
   .tab3-container {
@@ -12,5 +12,47 @@ ion-content {
     height: 100%; /* Ensure it covers the full height of the content */
     width: 100%; /* Ensure it covers the full width */
     box-sizing: border-box; /* Include padding and border in width and height calculations */
+  }
+  
+  ion-card {
+    border-radius: 16px; /* Rounded corners */
+    margin: 12px; /* Space between cards */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    overflow: hidden; /* Crop content that overflows the card */
+  }
+  
+  ion-item {
+    --background: transparent; /* Remove default background */
+    padding: 0; /* Remove padding for a cleaner look */
+    align-items: center; /* Align items vertically */
+  }
+  
+  ion-thumbnail {
+    width: 70px; /* Fixed width for thumbnail */
+    height: 70px; /* Fixed height for thumbnail */
+    margin-right: 10px; /* Space between thumbnail and text */
+  }
+  
+  ion-label {
+    h2 {
+      font-weight: bold;
+      font-size: 18px; /* Slightly larger font size */
+      margin: 0; /* Remove default margin */
+      color: #333; /* Darker text color */
+    }
+  
+    p {
+      color: #666; /* Slightly lighter text color for description */
+      margin: 4px 0 0; /* Adjust margin for spacing */
+      font-size: 14px; /* Smaller font size for description */
+    }
+  }
+  
+  ion-button {
+    margin: 8px 0; /* Space around the button */
+    font-weight: bold;
+    --border-radius: 8px; /* Rounded button */
+    --background: #e74c3c; /* Red color for the "Ver más" button */
+    color: #fff; /* White text */
   }
   

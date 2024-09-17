@@ -1,7 +1,8 @@
-// src/app/app-routing.module.ts
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LessonDashboardComponent } from './lesson-dashboard/lesson-dashboard.component';
+import { FeedbackFormComponent } from './feedback-form/feedback-form.component';
+import { FeedbackListComponent } from './feedback-list/feedback-list.component';
 
 const routes: Routes = [
   {
@@ -47,6 +48,14 @@ const routes: Routes = [
   {
     path: 'material-manager',
     loadChildren: () => import('./manager/material-manager/material-manager.module').then(m => m.MaterialManagerModule),
+  },
+  {
+    path: 'give-feedback',  // Route for the Feedback Form
+    loadChildren: () => import('./feedback-form/feedback-form.module').then(m => m.FeedbackFormModule),
+  },
+  {
+    path: 'view-feedback',  // Route for the Feedback List
+    loadChildren: () => import('./feedback-list/feedback-list.module').then(m => m.FeedbackListModule),
   },
   {
     path: '',

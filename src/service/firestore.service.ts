@@ -23,6 +23,12 @@ interface UserDocument {
   currentCourse?: CurrentCourse; // Contains current course details
 }
 
+interface UserDocument {
+  stats?: UserStats;
+  currentCourse?: CurrentCourse;
+  role?: string; // Added role property
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -174,6 +180,52 @@ export class FirestoreService {
       return of([]);
     })
   );
+}
+
+
+// Fetch user role
+getUserRole(userId: string): Observable<string | null> {
+  // Specify the type explicitly to avoid type errors
+  return this.firestore.collection('users').doc<UserDocument>(userId).valueChanges().pipe(
+    map(user => user?.role || null),  // Access role safely
+    catchError(error => {
+      console.error('Error fetching user role:', error);
+      return of(null);  // Handle errors gracefully
+    })
+  );
+}
+
+
+// Fetch feedbacks for a specific student
+getFeedbacksForStudent(studentId: string): Observable<any[]> {
+  return this.firestore.collection('users').doc(studentId).collection('feedbacks').valueChanges().pipe(
+    catchError(error => {
+      console.error('Error fetching feedbacks:', error);
+      return of([]);
+    })
+  );
+}
+
+// Add feedback for a student
+addFeedback(studentId: string, feedback: { name: string; description: string; date: Date }): Promise<void> {
+  return this.firestore.collection('users').doc(studentId).collection('feedbacks').add(feedback).then(() => {
+    console.log('Feedback added successfully');
+  }).catch(error => {
+    console.error('Error adding feedback:', error);
+    throw error;
+  });
+}
+
+// Fetch students (users without the teacher role)
+getStudents(): Observable<UserDocument[]> {
+  return this.firestore.collection<UserDocument>('users', ref => ref.where('role', '==', 'student'))
+    .valueChanges()
+    .pipe(
+      catchError(error => {
+        console.error('Error fetching students:', error);
+        return of([]);
+      })
+    );
 }
 
 }

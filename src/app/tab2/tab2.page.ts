@@ -13,9 +13,11 @@ import { User } from 'firebase/auth';
 })
 export class Tab2Page implements OnInit {
   user$: Observable<User | null>;
-  stats: any = { clasesCompletadas: 0, tareasCompletadas: 0, logros: 0 }; // Default stats values
-  currentCourse: any = null; // Initialize with null or default course object
-  recentSessions: any[] = []; // Initialize as empty array
+  stats: any = { clasesCompletadas: 0, tareasCompletadas: 0, logros: 0 };
+  currentCourse: any = null;
+  recentSessions: any[] = [];
+  userRole: string | null = null; // Added to store user role
+  feedbacks: any[] = []; // Store feedbacks for students
 
   constructor(
     private authService: AuthService,
@@ -26,15 +28,22 @@ export class Tab2Page implements OnInit {
   }
 
   ngOnInit(): void {
-    // Subscribe to user observable to get the user ID and fetch data
     this.user$.subscribe(user => {
       if (user) {
-        const userId = user.uid; // Get the user's ID
-        
-        // Fetch stats, current course, and recent sessions using the user ID
+        const userId = user.uid;
+
+        // Fetch user-specific data
         this.firestoreService.getUserStats(userId).subscribe(stats => this.stats = stats);
         this.firestoreService.getCurrentCourse(userId).subscribe(course => this.currentCourse = course);
         this.firestoreService.getRecentSessions(userId).subscribe(sessions => this.recentSessions = sessions);
+
+        // Fetch user role
+        this.firestoreService.getUserRole(userId).subscribe(role => {
+          this.userRole = role;
+          if (role === 'student') {
+            this.loadFeedbacks(userId); // Load feedbacks for students
+          }
+        });
       }
     });
   }
@@ -44,8 +53,17 @@ export class Tab2Page implements OnInit {
     this.router.navigate(['/update-profile']);
   }
 
-  // New method to navigate to the lessons page
   goToLessons(courseId: string, courseName: string) {
     this.router.navigate(['/lessons', courseId, { courseName }]);
+  }
+
+  // Load feedbacks for students
+  loadFeedbacks(userId: string) {
+    this.firestoreService.getFeedbacksForStudent(userId).subscribe(feedbacks => this.feedbacks = feedbacks);
+  }
+
+  // Navigate to feedback creation page (for teachers)
+  giveFeedback() {
+    this.router.navigate(['/give-feedback']);
   }
 }
