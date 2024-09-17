@@ -1,6 +1,8 @@
 // src/app/tab1/tab1.page.ts
+
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/service/auth.service'; // Ensure the path is correct
+import { FirestoreService } from 'src/service/firestore.service'; // Import FirestoreService
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { User } from 'firebase/auth';
@@ -21,13 +23,22 @@ export class Tab1Page implements OnInit {
     { id: 4, title: 'Transitionals', image: 'assets/images/transitionals.jpg' }
   ];
 
-  constructor(private authService: AuthService, private router: Router) {
-    // Initialize the user$ observable from the AuthService
+  constructor(
+    private authService: AuthService,
+    private firestoreService: FirestoreService, // Inject FirestoreService
+    private router: Router
+  ) {
     this.user$ = this.authService.currentUser$;
   }
 
   ngOnInit(): void {
-    // Any additional initialization can be done here
+    // Fetch the user stats dynamically
+    this.user$.subscribe(user => {
+      if (user) {
+        const userId = user.uid;
+        this.firestoreService.getUserStats(userId).subscribe(stats => this.stats = stats);
+      }
+    });
   }
 
   // Navigate to the update profile component

@@ -1,0 +1,72 @@
+.dashboard-container {
+    padding: 16px;
+    background-image: url('/assets/images/whiteback.png'); // Ensure correct path to your image
+    background-size: cover; // Covers the entire content area
+    background-position: center; // Centers the image
+    background-repeat: no-repeat; // Prevent repetition
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px; // Adds consistent spacing between elements
+    box-sizing: border-box; // Includes padding and borders in height and width calculations
+  }
+  
+  ion-card {
+    --background: rgba(255, 255, 255, 0.9); // Semi-transparent background for contrast
+    border-radius: 12px; // Rounded corners for a softer look
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Subtle shadow for depth
+    margin-bottom: 16px; // Space between cards
+    overflow: hidden;
+  }
+  
+  ion-card-header {
+    display: flex;
+    align-items: center; // Aligns icon and text
+    padding: 8px 16px; // Consistent padding inside the card header
+    background-color: #f8f9fa; // Light background for the header
+    border-bottom: 1px solid #e0e0e0; // Divider line below header
+    ion-icon {
+      margin-right: 8px; // Space between icon and title
+      font-size: 22px; // Icon size adjustment
+      color: #3880ff; // Primary color for icons
+    }
+    ion-title {
+      font-size: 18px; // Adjust title size
+      font-weight: 600; // Slightly bold text for better readability
+    }
+  }
+  
+  ion-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; // Adds spacing between buttons
+    padding: 12px 16px; // Content padding
+    ion-button {
+      --color: #3880ff; // Button text color
+      --background: transparent; // Transparent background for 'fill=clear'
+      --ripple-color: #b3d4fc; // Ripple effect color on click
+      font-size: 14px; // Font size adjustment for readability
+      border-radius: 6px; // Slightly rounded buttons
+      padding: 6px 12px; // Padding inside buttons
+      transition: all 0.2s; // Smooth hover transition
+      &:hover {
+        background-color: rgba(56, 128, 255, 0.1); // Light blue hover effect
+      }
+    }
+  }
+  
+  .session-button {
+    margin-top: 20px; // Space above the button
+    font-weight: bold;
+    --color: #fff; // White text
+    --background: linear-gradient(45deg, #1fa2ff, #12d8fa, #a6ffcb); // Gradient background for the button
+    --box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); // Box shadow for depth
+    --border-radius: 10px; // More pronounced rounded corners
+    padding: 12px; // Padding for button size consistency
+    transition: transform 0.2s ease-in-out; // Smooth transition on hover
+    &:hover {
+      transform: scale(1.02); // Slight scale-up on hover
+    }
+  }
+  

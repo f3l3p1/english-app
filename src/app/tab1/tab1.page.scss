@@ -1,15 +1,14 @@
-/* Add this CSS to your global stylesheet or the specific component stylesheet */
+/* src/app/tab1/tab1.page.scss */
 
-/* Fullscreen content adjustments */
 .dashboard-container {
   padding: 16px;
-  background-image: url('/assets/images/whiteback.png'); /* Absolute path from the project root */
-  background-size: cover; /* Cover the entire container */
-  background-position: center; /* Center the image */
-  background-repeat: no-repeat; /* Prevent the image from repeating */
-  height: 100%; /* Ensure it covers the full height of the content */
-  width: 100%; /* Ensure it covers the full width */
-  box-sizing: border-box; /* Include padding and border in width and height calculations */
+  background-image: url('/assets/images/whiteback.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .user-info {
@@ -33,21 +32,21 @@
 .stats {
   ion-card {
     display: flex;
-    justify-content: center; /* Centers items horizontally */
-    align-items: center; /* Centers items vertically */
-    text-align: center; /* Centers text within each item */
-    padding: 20px; /* Optional: Adjust padding for better spacing */
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
 
     ion-row {
-      width: 100%; /* Ensures the row takes full width */
+      width: 100%;
       display: flex;
-      justify-content: space-around; /* Evenly distributes the icons and texts */
+      justify-content: space-around;
       align-items: center;
 
       ion-col {
         display: flex;
-        flex-direction: column; /* Stack icon and text vertically */
-        align-items: center; /* Center each column content */
+        flex-direction: column;
+        align-items: center;
         justify-content: center;
       }
     }
@@ -68,14 +67,18 @@
     display: flex;
     flex-wrap: nowrap;
     overflow-x: scroll;
-    ion-card {
+
+    ion-card.course-card {
       flex: 0 0 auto;
       width: 150px;
       margin-right: 10px;
-      ion-img {
-        border-radius: 8px;
-        height: 120px;
-        object-fit: cover;
+      background-color: #1E90FF; /* Blue background */
+      color: white; /* White text color */
+      
+      ion-card-content {
+        h3 {
+          color: white; /* Ensure course title is white */
+        }
       }
     }
   }

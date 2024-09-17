@@ -47,7 +47,7 @@
         <ion-button size="small" fill="clear" (click)="goToTab3()">Ver todos</ion-button>
       </h3>
       <ion-scroll scrollX="true">
-        <ion-card *ngFor="let course of courses" (click)="goToSubscribe(course.id)">
+        <ion-card *ngFor="let course of courses" (click)="goToSubscribe(course.id)" class="course-card">
           <ion-img [src]="course.image"></ion-img>
           <ion-card-content>
             <h3>{{ course.title }}</h3>
@@ -70,4 +70,5 @@
         </ion-card-content>
       </ion-card>
     </div>
-    
+  </div>
+</ion-content>
