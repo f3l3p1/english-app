@@ -1,35 +1,29 @@
-import { Component } from '@angular/core';
+// src/app/manager/task-manager/task-manager.component.ts
+import { Component, OnInit } from '@angular/core';
 import { FirestoreService } from 'src/service/firestore.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-task-manager',
   templateUrl: './task-manager.component.html',
   styleUrls: ['./task-manager.component.scss'],
 })
-export class TaskManagerComponent {
-  tasks: { id: string, title: string, description: string }[] = []; // Define tasks array
-  taskTitle = '';
-  taskDescription = '';
+export class TaskManagerComponent implements OnInit {
+  tasks: any[] = [];
 
-  constructor(private firestoreService: FirestoreService) {}
+  constructor(private firestoreService: FirestoreService, private route: ActivatedRoute) {}
 
-  addTask(): void {
-    const task = { title: this.taskTitle, description: this.taskDescription };
-    this.firestoreService.addTask('lesson-id', task) // Replace 'lesson-id' with actual lesson ID
-      .then(() => {
-        alert('Task added successfully!');
-        this.taskTitle = '';
-        this.taskDescription = '';
-        // Refresh or fetch tasks again
-      })
-      .catch((error: any) => {
-        console.error('Error adding task:', error);
-        alert('Failed to add task.');
+  ngOnInit() {
+    const lessonId = this.route.snapshot.paramMap.get('id');
+    if (lessonId) {
+      this.firestoreService.getTasks(lessonId).subscribe(tasks => {
+        this.tasks = tasks;
       });
+    }
   }
 
-  deleteTask(taskId: string): void {
-    // Implement deletion logic using Firestore service
-    alert(`Delete task with ID: ${taskId}`);
+  startTask(task: any) {
+    // Logic to start or display task (e.g., quiz, worksheet)
+    alert(`Starting task: ${task.title}`);
   }
 }

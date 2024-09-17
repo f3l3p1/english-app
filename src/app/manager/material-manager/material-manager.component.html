@@ -1,31 +1,16 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Material Manager</ion-title>
+    <ion-title>Materials</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div class="manager-container">
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Upload New Material</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <input type="file" (change)="onFileSelected($event)" />
-        <ion-button expand="block" (click)="uploadMaterial()">Upload Material</ion-button>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-list>
-      <ion-item *ngFor="let material of materials">
-        <ion-label>{{ material.name }}</ion-label>
-        <ion-button fill="clear" slot="end" (click)="downloadMaterial(material.url)">
-          <ion-icon name="download-outline"></ion-icon>
-        </ion-button>
-        <ion-button fill="clear" slot="end" color="danger" (click)="deleteMaterial(material.id)">
-          <ion-icon name="trash-outline"></ion-icon>
-        </ion-button>
-      </ion-item>
-    </ion-list>
-  </div>
+  <ion-list>
+    <ion-item *ngFor="let material of materials">
+      <ion-label>{{ material.name }}</ion-label>
+      <ion-button fill="clear" (click)="downloadMaterial(material.url)">
+        <ion-icon name="download-outline"></ion-icon> Download
+      </ion-button>
+    </ion-item>
+  </ion-list>
 </ion-content>

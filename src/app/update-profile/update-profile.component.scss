@@ -1,5 +1,17 @@
+/* src/app/update-profile/update-profile.page.scss */
 .update-profile-container {
-  --background: #f8f9fa;
+  --background: none; /* Remove default Ionic background */
+  background-image: url('/assets/images/fondo.png'); /* Use absolute path from the project root */
+  background-size: cover; /* Cover the entire container */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+  min-height: 100vh; /* Cover the full viewport height */
+  display: flex; /* Flexbox to center content */
+  flex-direction: column; /* Arrange children vertically */
+  align-items: center; /* Center children horizontally */
+  justify-content: flex-start; /* Start children from the top */
+  padding: 20px; /* Space around the edges */
+  box-sizing: border-box; /* Include padding and border in the width and height calculations */
 
   .profile-header {
     display: flex;
@@ -17,25 +29,29 @@
       font-size: 22px;
       font-weight: bold;
       margin: 0;
+      color: #ffffff; /* White color for username */
     }
 
     p {
-      color: #7a7a7a;
+      color: #ffffff; /* White color for email */
       margin: 0;
     }
   }
 
   .update-form-card {
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent white background for better readability */
     margin: 0 20px;
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    
+    width: 100%;
+    max-width: 400px; /* Optional: Set a max width to keep the form compact */
+
     ion-item {
       margin-top: 10px;
       position: relative; /* Ensures that datetime elements are positioned correctly */
       z-index: 0; /* Normal stacking order */
-      
+
       ion-label {
         font-size: 14px;
         color: #555;

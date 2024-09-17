@@ -10,9 +10,9 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="tab3-container">
   <ion-card *ngFor="let course of courses">
-    <ion-item>
+    <ion-item lines="none">
       <ion-thumbnail slot="start">
         <ion-img [src]="course.image" alt="{{ course.title }}"></ion-img>
       </ion-thumbnail>

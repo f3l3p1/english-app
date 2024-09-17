@@ -1,29 +1,26 @@
+<!-- src/app/manager/audio-manager/audio-manager.component.html -->
+
 <ion-header>
   <ion-toolbar>
     <ion-title>Audio Manager</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <div class="manager-container">
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Upload New Audio</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <input type="file" accept="audio/*" (change)="onFileSelected($event)" />
-        <ion-button expand="block" (click)="uploadAudio()">Upload Audio</ion-button>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-list>
-      <ion-item *ngFor="let audio of audios">
-        <ion-label>{{ audio.name }}</ion-label>
-        <audio controls [src]="audio.url"></audio>
-        <ion-button fill="clear" slot="end" color="danger" (click)="deleteAudio(audio.id)">
-          <ion-icon name="trash-outline"></ion-icon>
-        </ion-button>
-      </ion-item>
-    </ion-list>
-  </div>
+<ion-content *ngIf="audios.length > 0; else noAudios">
+  <ion-list>
+    <ion-item *ngFor="let audio of audios">
+      <ion-label>
+        <h2>{{ audio.name }}</h2>
+        <p>{{ audio.url }}</p>
+      </ion-label>
+      <audio controls>
+        <source [src]="audio.url" type="audio/ogg">
+        Your browser does not support the audio element.
+      </audio>
+    </ion-item>
+  </ion-list>
 </ion-content>
+
+<ng-template #noAudios>
+  <div>No audios available for this lesson.</div>
+</ng-template>

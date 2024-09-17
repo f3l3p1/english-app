@@ -1,46 +1,29 @@
-import { Component } from '@angular/core';
+// src/app/manager/material-manager/material-manager.component.ts
+import { Component, OnInit } from '@angular/core';
 import { FirestoreService } from 'src/service/firestore.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-material-manager',
   templateUrl: './material-manager.component.html',
   styleUrls: ['./material-manager.component.scss'],
 })
-export class MaterialManagerComponent {
-  materials: { id: string, name: string, url: string }[] = []; // Define materials array
-  selectedFile: File | null = null;
+export class MaterialManagerComponent implements OnInit {
+  materials: any[] = [];
 
-  constructor(private firestoreService: FirestoreService) {}
+  constructor(private firestoreService: FirestoreService, private route: ActivatedRoute) {}
 
-  onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      this.selectedFile = input.files[0];
+  ngOnInit() {
+    const lessonId = this.route.snapshot.paramMap.get('id');
+    if (lessonId) {
+      this.firestoreService.getMaterials(lessonId).subscribe(materials => {
+        this.materials = materials;
+      });
     }
   }
 
-  uploadMaterial(): void {
-    if (this.selectedFile) {
-      this.firestoreService.addMaterial('lesson-id', this.selectedFile) // Replace 'lesson-id' with actual lesson ID
-        .then(() => {
-          alert('Material uploaded successfully!');
-          // Refresh or fetch materials again
-        })
-        .catch((error: any) => {
-          console.error('Error uploading material:', error);
-          alert('Failed to upload material.');
-        });
-    } else {
-      alert('Please select a file first.');
-    }
-  }
-
-  downloadMaterial(url: string): void {
+  downloadMaterial(url: string) {
+    // Logic to download material
     window.open(url, '_blank');
-  }
-
-  deleteMaterial(materialId: string): void {
-    // Implement deletion logic using Firestore service
-    alert(`Delete material with ID: ${materialId}`);
   }
 }

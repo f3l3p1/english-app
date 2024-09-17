@@ -1,101 +1,111 @@
+/* Add this CSS to your global stylesheet or the specific component stylesheet */
+
+/* Fullscreen content adjustments */
 .dashboard-container {
-    padding: 16px;
-  
-    .user-info {
-      text-align: center;
-      ion-avatar {
-        margin: auto;
-        display: block;
-        width: 80px;
-        height: 80px;
-      }
-      h2 {
-        font-size: 24px;
-        margin: 8px 0 4px;
-      }
-      p {
-        color: #888;
-        font-size: 14px;
+  padding: 16px;
+  background-image: url('/assets/images/whiteback.png'); /* Absolute path from the project root */
+  background-size: cover; /* Cover the entire container */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+  height: 100%; /* Ensure it covers the full height of the content */
+  width: 100%; /* Ensure it covers the full width */
+  box-sizing: border-box; /* Include padding and border in width and height calculations */
+}
+
+.user-info {
+  text-align: center;
+  ion-avatar {
+    margin: auto;
+    display: block;
+    width: 80px;
+    height: 80px;
+  }
+  h2 {
+    font-size: 24px;
+    margin: 8px 0 4px;
+  }
+  p {
+    color: #888;
+    font-size: 14px;
+  }
+}
+
+.stats {
+  ion-card {
+    display: flex;
+    justify-content: center; /* Centers items horizontally */
+    align-items: center; /* Centers items vertically */
+    text-align: center; /* Centers text within each item */
+    padding: 20px; /* Optional: Adjust padding for better spacing */
+
+    ion-row {
+      width: 100%; /* Ensures the row takes full width */
+      display: flex;
+      justify-content: space-around; /* Evenly distributes the icons and texts */
+      align-items: center;
+
+      ion-col {
+        display: flex;
+        flex-direction: column; /* Stack icon and text vertically */
+        align-items: center; /* Center each column content */
+        justify-content: center;
       }
     }
-  
-    .stats {
-      ion-card {
-        display: flex;
-        justify-content: center;  // Centers items horizontally
-        align-items: center;      // Centers items vertically
-        text-align: center;       // Centers text within each item
-        padding: 20px;            // Optional: Adjust padding for better spacing
-    
-        ion-row {
-          width: 100%;            // Ensures the row takes full width
+  }
+}
+
+.courses {
+  margin-top: 20px;
+  h3 {
+    display: inline-block;
+    font-weight: bold;
+  }
+  ion-button {
+    font-size: 14px;
+    color: red;
+  }
+  ion-scroll {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    ion-card {
+      flex: 0 0 auto;
+      width: 150px;
+      margin-right: 10px;
+      ion-img {
+        border-radius: 8px;
+        height: 120px;
+        object-fit: cover;
+      }
+    }
+  }
+}
+
+.news {
+  margin-top: 20px;
+  h3 {
+    display: inline-block;
+    font-weight: bold;
+  }
+  ion-button {
+    font-size: 14px;
+    color: red;
+  }
+  ion-card {
+    ion-img {
+      border-radius: 8px;
+      height: 120px;
+      object-fit: cover;
+    }
+    ion-card-content {
+      text-align: left;
+      ion-row {
+        margin-top: 10px;
+        ion-col {
           display: flex;
-          justify-content: space-around; // Evenly distributes the icons and texts
           align-items: center;
-    
-          ion-col {
-            display: flex;
-            flex-direction: column; // Stack icon and text vertically
-            align-items: center;    // Center each column content
-            justify-content: center;
-          }
-        }
-      }
-    }
-    .courses {
-      margin-top: 20px;
-      h3 {
-        display: inline-block;
-        font-weight: bold;
-      }
-      ion-button {
-        font-size: 14px;
-        color: red;
-      }
-      ion-scroll {
-        display: flex;
-        flex-wrap: nowrap;
-        overflow-x: scroll;
-        ion-card {
-          flex: 0 0 auto;
-          width: 150px;
-          margin-right: 10px;
-          ion-img {
-            border-radius: 8px;
-            height: 120px;
-            object-fit: cover;
-          }
-        }
-      }
-    }
-  
-    .news {
-      margin-top: 20px;
-      h3 {
-        display: inline-block;
-        font-weight: bold;
-      }
-      ion-button {
-        font-size: 14px;
-        color: red;
-      }
-      ion-card {
-        ion-img {
-          border-radius: 8px;
-          height: 120px;
-          object-fit: cover;
-        }
-        ion-card-content {
-          text-align: left;
-          ion-row {
-            margin-top: 10px;
-            ion-col {
-              display: flex;
-              align-items: center;
-            }
-          }
         }
       }
     }
   }
-  
+}

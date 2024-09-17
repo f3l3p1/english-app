@@ -1,0 +1,16 @@
+/* src/app/tab3/tab3.page.scss */
+ion-content {
+    --background: none; /* Remove default background */
+  }
+  
+  .tab3-container {
+    padding: 16px;
+    background-image: url('/assets/images/whiteback.png'); /* Absolute path from the project root */
+    background-size: cover; /* Cover the entire container */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    height: 100%; /* Ensure it covers the full height of the content */
+    width: 100%; /* Ensure it covers the full width */
+    box-sizing: border-box; /* Include padding and border in width and height calculations */
+  }
+  

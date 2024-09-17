@@ -4,29 +4,36 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Router } from '@angular/router';
-import { GoogleAuthProvider } from '@angular/fire/auth';
-import { Observable } from 'rxjs';
-import { User } from 'firebase/auth';
+import { GoogleAuthProvider } from 'firebase/auth';
+import { User } from '@angular/fire/auth'; // Correct User type import
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  currentUser$: Observable<User | null>; // Observable for the current user
+  private currentUserSubject: BehaviorSubject<User | null>;
+  public currentUser$: Observable<User | null>;
 
   constructor(
     private afAuth: AngularFireAuth,
     private firestore: AngularFirestore,
-    private storage: AngularFireStorage, // Inject AngularFireStorage
+    private storage: AngularFireStorage,
     private router: Router
   ) {
-    // Initialize currentUser$ to observe the authentication state
-    this.currentUser$ = this.afAuth.authState as Observable<User | null>;
+    this.currentUserSubject = new BehaviorSubject<User | null>(null);
+    this.currentUser$ = this.currentUserSubject.asObservable();
+
+    // Subscribe to AngularFireAuth auth state changes
+    this.afAuth.authState.subscribe(user => {
+      this.currentUserSubject.next(user as User | null); // Cast to resolve type conflict
+    });
   }
 
-  // Method to get the current user as an observable
-  getUserObservable(): Observable<User | null> {
-    return this.currentUser$;
+  // Check if the user is authenticated
+  isAuthenticated(): Observable<boolean> {
+    return this.currentUser$.pipe(map(user => !!user));
   }
 
   // Login with email and password
@@ -41,32 +48,37 @@ export class AuthService {
     );
   }
 
-  // Register with email and password and store user data in Firestore
-  register(email: string, password: string): Promise<void> {
-    return this.afAuth.createUserWithEmailAndPassword(email, password).then(
-      async (userCredential) => {
-        const user = userCredential.user;
-        if (user) {
-          await user.updateProfile({ displayName: 'User Name' }); // Set displayName after registration
-          this.firestore.collection('users').doc(user.uid).set({
-            uid: user.uid,
-            email: user.email,
-            displayName: user.displayName || 'User Name', // Use updated displayName
-            createdAt: new Date(),
-          }).then(() => {
-            alert('Registration Successful');
-            this.router.navigate(['/login']);
-          }).catch((error) => {
-            console.error('Error saving user data to Firestore:', error);
-            alert('Failed to save user data. Please try again.');
-          });
+ // Register with email and password and store user data in Firestore
+ register(email: string, password: string): Promise<void> {
+  return this.afAuth.createUserWithEmailAndPassword(email, password).then(
+    async (userCredential) => {
+      const user = userCredential.user as User; // Ensure correct type
+      if (user) {
+        // Using AngularFireAuth to update profile
+        const currentUser = await this.afAuth.currentUser;
+        if (currentUser) {
+          await currentUser.updateProfile({ displayName: 'User Name' }); // Use currentUser
         }
-      },
-      (error) => {
-        alert(error.message);
+        this.firestore.collection('users').doc(user.uid).set({
+          uid: user.uid,
+          email: user.email,
+          displayName: user.displayName || 'User Name',
+          createdAt: new Date(),
+        }).then(() => {
+          alert('Registration Successful');
+          this.router.navigate(['/login']);
+        }).catch((error) => {
+          console.error('Error saving user data to Firestore:', error);
+          alert('Failed to save user data. Please try again.');
+        });
       }
-    );
-  }
+    },
+    (error) => {
+      alert(error.message);
+    }
+  );
+}
+
 
   // Logout
   logout(): Promise<void> {
@@ -79,7 +91,7 @@ export class AuthService {
   googleSignIn(): Promise<void> {
     return this.afAuth.signInWithPopup(new GoogleAuthProvider()).then(
       (result) => {
-        const user = result.user;
+        const user = result.user as User; // Ensure correct type
         if (user) {
           const userDoc = this.firestore.collection('users').doc(user.uid);
           userDoc.get().subscribe((doc) => {
@@ -87,7 +99,7 @@ export class AuthService {
               userDoc.set({
                 uid: user.uid,
                 email: user.email,
-                displayName: user.displayName || 'Google User', // Check displayName
+                displayName: user.displayName || 'Google User',
                 createdAt: new Date(),
               }).then(() => {
                 alert('Google Sign-In Successful');
@@ -131,7 +143,6 @@ export class AuthService {
       .toPromise()
       .then(() => fileRef.getDownloadURL().toPromise())
       .then((url) => {
-        // Save the download URL in Firestore under the user document
         return this.firestore.collection('users').doc(userId).update({
           profilePictureUrl: url,
         });

@@ -12,15 +12,18 @@
   <ion-card class="course-card">
     <ion-item lines="none">
       <ion-thumbnail slot="start">
-        <ion-img [src]="course.image"></ion-img>
+        <!-- Use safe navigation operator to handle potential undefined values -->
+        <ion-img [src]="course?.image"></ion-img>
       </ion-thumbnail>
       <ion-label>
-        <h2>{{ course.title }}</h2>
-        <p>{{ course.description }}</p>
+        <h2>{{ course?.title }}</h2>
+        <p>{{ course?.description }}</p>
         <p>Lessons: 20</p>
       </ion-label>
     </ion-item>
+    <!-- Button to subscribe to the course -->
     <ion-button expand="full" color="danger" (click)="subscribe()">Inscribir</ion-button>
+    <!-- Button to cancel and go back -->
     <ion-button expand="full" color="medium" (click)="cancel()">Cancelar</ion-button>
   </ion-card>
 </ion-content>

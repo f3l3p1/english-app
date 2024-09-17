@@ -1,6 +1,7 @@
 // src/app/app-routing.module.ts
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LessonDashboardComponent } from './lesson-dashboard/lesson-dashboard.component';
 
 const routes: Routes = [
   {
@@ -24,15 +25,15 @@ const routes: Routes = [
     loadChildren: () => import('./lessons/lessons.module').then(m => m.LessonsPageModule),
   },
   {
-    path: 'lesson-dashboard',
-    loadChildren: () => import('./lesson-dashboard/lesson-dashboard.module').then(m => m.LessonDashboardModule),
+    path: 'lesson-dashboard/:lessonId',  // Define the path to include lessonId as a parameter
+    component: LessonDashboardComponent,
   },
   {
     path: 'update-profile',
     loadChildren: () => import('./update-profile/update-profile.module').then(m => m.UpdateProfileModule),
   },
   {
-    path: 'audio-manager',
+    path: 'audio-manager/:lessonId',  // Add the :lessonId parameter
     loadChildren: () => import('./manager/audio-manager/audio-manager.module').then(m => m.AudioManagerModule),
   },
   {

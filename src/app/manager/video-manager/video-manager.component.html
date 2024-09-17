@@ -1,29 +1,16 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Video Manager</ion-title>
+    <ion-title>Video Resources</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div class="manager-container">
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Upload New Video</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <input type="file" accept="video/*" (change)="onFileSelected($event)" />
-        <ion-button expand="block" (click)="uploadVideo()">Upload Video</ion-button>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-list>
-      <ion-item *ngFor="let video of videos">
-        <ion-label>{{ video.name }}</ion-label>
-        <video controls [src]="video.url" preload="metadata" class="video-preview"></video>
-        <ion-button fill="clear" slot="end" color="danger" (click)="deleteVideo(video.id)">
-          <ion-icon name="trash-outline"></ion-icon>
-        </ion-button>
-      </ion-item>
-    </ion-list>
-  </div>
+  <ion-list>
+    <ion-item *ngFor="let video of videos">
+      <ion-label>{{ video.name }}</ion-label>
+      <ion-button fill="clear" (click)="playVideo(video.url)">
+        <ion-icon name="play-outline"></ion-icon> Play
+      </ion-button>
+    </ion-item>
+  </ion-list>
 </ion-content>
