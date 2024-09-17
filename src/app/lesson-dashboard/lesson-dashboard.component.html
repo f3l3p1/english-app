@@ -1,67 +1,75 @@
+<!-- src/app/lesson-dashboard/lesson-dashboard.component.html -->
+
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button (click)="goBackToLessons()">
-        <ion-icon name="arrow-back-outline"></ion-icon> Back
-      </ion-button>
+      <ion-back-button defaultHref="/tabs/tab1"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ lessonTitle }}</ion-title>
+    <ion-title>My Lessons</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="goToSettings()">
+      <ion-button (click)="openOnlineSession()">
         <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <div class="dashboard-container">
-    <div class="panel" (click)="navigateTo('online')">
-      <ion-card>
-        <ion-card-header>
-          <ion-icon name="videocam-outline"></ion-icon>
-          <h2>Online Sessions</h2>
-          <p>Coming soon...</p>
-        </ion-card-header>
-      </ion-card>
-    </div>
+<ion-content class="dashboard-container">
+  <!-- Audio Panel -->
+  <ion-card>
+    <ion-card-header>
+      <ion-icon name="volume-high-outline"></ion-icon>
+      <ion-title>Audio</ion-title>
+    </ion-card-header>
+    <ion-card-content>
+      <input #audioInput type="file" (change)="onFileSelected($event, 'audios')" style="display: none;">
+      <button *ngIf="isTeacher" ion-button fill="clear" (click)="audioInput.click()">Upload Audio</button>
+      <button ion-button fill="clear" (click)="viewFiles('audios')">View Audio</button>
+    </ion-card-content>
+  </ion-card>
 
-    <div class="panel" (click)="navigateTo('audio')">
-      <ion-card>
-        <ion-card-header>
-          <ion-icon name="musical-notes-outline"></ion-icon>
-          <h2>Audio</h2>
-        </ion-card-header>
-      </ion-card>
-    </div>
+  <!-- Video Panel -->
+  <ion-card>
+    <ion-card-header>
+      <ion-icon name="videocam-outline"></ion-icon>
+      <ion-title>Video</ion-title>
+    </ion-card-header>
+    <ion-card-content>
+      <input #videoInput type="file" (change)="onFileSelected($event, 'videos')" style="display: none;">
+      <button *ngIf="isTeacher" ion-button fill="clear" (click)="videoInput.click()">Upload Video</button>
+      <button ion-button fill="clear" (click)="viewFiles('videos')">View Video</button>
+    </ion-card-content>
+  </ion-card>
 
-    <div class="panel" (click)="navigateTo('video')">
-      <ion-card>
-        <ion-card-header>
-          <ion-icon name="play-outline"></ion-icon>
-          <h2>Video</h2>
-        </ion-card-header>
-      </ion-card>
-    </div>
+  <!-- Tasks Panel -->
+  <ion-card>
+    <ion-card-header>
+      <ion-icon name="clipboard-outline"></ion-icon>
+      <ion-title>Tasks</ion-title>
+    </ion-card-header>
+    <ion-card-content>
+      <input #taskInput type="file" (change)="onFileSelected($event, 'tasks')" style="display: none;">
+      <button *ngIf="isTeacher" ion-button fill="clear" (click)="taskInput.click()">Upload Task</button>
+      <button ion-button fill="clear" (click)="viewFiles('tasks')">View Tasks</button>
+    </ion-card-content>
+  </ion-card>
 
-    <div class="panel" (click)="navigateTo('tasks')">
-      <ion-card>
-        <ion-card-header>
-          <ion-icon name="clipboard-outline"></ion-icon>
-          <h2>Task</h2>
-          <p>Complete worksheet</p>
-        </ion-card-header>
-      </ion-card>
-    </div>
+  <!-- Materials Panel -->
+  <ion-card>
+    <ion-card-header>
+      <ion-icon name="book-outline"></ion-icon>
+      <ion-title>Materials</ion-title>
+    </ion-card-header>
+    <ion-card-content>
+      <input #materialInput type="file" (change)="onFileSelected($event, 'materials')" style="display: none;">
+      <button *ngIf="isTeacher" ion-button fill="clear" (click)="materialInput.click()">Upload Material</button>
+      <button ion-button fill="clear" (click)="viewFiles('materials')">View Materials</button>
+    </ion-card-content>
+  </ion-card>
 
-    <div class="panel red-panel" (click)="navigateTo('materials')">
-      <ion-card>
-        <ion-card-header>
-          <ion-icon name="book-outline"></ion-icon>
-          <h2>Materials</h2>
-          <p>Learning resources</p>
-        </ion-card-header>
-      </ion-card>
-    </div>
-  </div>
+  <!-- Online Session Button -->
+  <ion-button expand="block" color="tertiary" (click)="openOnlineSession()" class="session-button">
+    <ion-icon slot="start" name="videocam-outline"></ion-icon>
+    Online Session
+  </ion-button>
 </ion-content>

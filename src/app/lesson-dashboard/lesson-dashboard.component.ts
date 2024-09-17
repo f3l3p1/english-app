@@ -1,78 +1,96 @@
-import { Component, OnInit } from '@angular/core';
+// src/app/lesson-dashboard/lesson-dashboard.component.ts
+
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from 'src/service/auth.service';
+import { FirestoreService } from 'src/service/firestore.service';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-lesson-dashboard',
   templateUrl: './lesson-dashboard.component.html',
-  styleUrls: ['./lesson-dashboard.component.scss'],
+  styleUrls: ['./lesson-dashboard.component.scss']
 })
-export class LessonDashboardComponent implements OnInit {
+export class LessonDashboardComponent implements OnInit, OnDestroy {
+  lessonId!: string;
+  lessonTitle!: string;
+  userRole$!: Observable<string | null>;
+  isTeacher = false;
+  audios$!: Observable<any[]>;
+  videos$!: Observable<any[]>;
+  tasks$!: Observable<any[]>;
+  materials$!: Observable<any[]>;
+  private subscriptions: Subscription = new Subscription();
 
-  lessonTitle: string = ''; 
-  lessonId: string | null = null;
-  isAuthenticated: boolean = false;
+  @ViewChild('audioInput') audioInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('videoInput') videoInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('taskInput') taskInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('materialInput') materialInput!: ElementRef<HTMLInputElement>;
 
   constructor(
     private route: ActivatedRoute,
+    private firestoreService: FirestoreService,
     private router: Router,
-    private authService: AuthService
+    private cdr: ChangeDetectorRef  // Inject ChangeDetectorRef
   ) {}
 
-  ngOnInit() {
-    // Check for authentication state
-    this.authService.currentUser$.subscribe(user => {
-      this.isAuthenticated = !!user;
-      if (!this.isAuthenticated) {
-        this.router.navigate(['/login']);
-      } else {
-        // Set lesson ID and title if authenticated
-        this.lessonTitle = this.route.snapshot.queryParamMap.get('title') || 'Lesson Dashboard';
-        this.lessonId = this.route.snapshot.paramMap.get('lessonId');
-        if (!this.lessonId) {
-          alert('Lesson ID is missing!');
-          this.router.navigate(['/lessons']); // Navigate back if lesson ID is missing
-        } else {
-          // Proceed with using the lessonId for fetching relevant data
-          console.log('Lesson ID:', this.lessonId);        }
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      this.lessonId = params.get('lessonId') || '';
+      this.lessonTitle = this.route.snapshot.queryParamMap.get('title') || 'Lesson Title';
+
+      if (!this.lessonId) {
+        console.error('Lesson ID is missing or invalid.');
+        this.router.navigate(['/lessons']);
+        return;
       }
+
+      // Fetch the user's role to determine access
+      this.userRole$ = this.firestoreService.getUserRole('current-user-id'); // Replace with actual user ID
+      this.subscriptions.add(
+        this.userRole$.subscribe(role => {
+          this.isTeacher = role === 'teacher';
+          console.log('User role:', role, 'Is teacher:', this.isTeacher); // Debugging line
+          this.cdr.detectChanges();  // Ensure the UI updates when role changes
+        })
+      );
+
+      // Fetch files for the lesson
+      this.refreshFiles();
     });
   }
 
-  navigateTo(section: string) {
-    if (!this.isAuthenticated) {
-      this.router.navigate(['/login']);
-      return;
-    }
-  
-    switch (section) {
-      case 'audio':
-        if (this.lessonId) {
-          this.router.navigate(['/audio-manager', this.lessonId]); // Pass lessonId correctly
-        } else {
-          alert('Lesson ID is missing!');
-        }
-        break;
-      case 'video':
-        this.router.navigate(['/video-manager']);
-        break;
-      case 'tasks':
-        this.router.navigate(['/task-manager']);
-        break;
-      case 'materials':
-        this.router.navigate(['/material-manager']);
-        break;
-      default:
-        alert('Invalid section!');
-        break;
-    }
-  }  
-
-  goToSettings() {
-    this.router.navigate(['/update-profile']);
+  openOnlineSession() {
+    alert('Online Session feature coming soon!');
   }
 
-  goBackToLessons() {
-    this.router.navigate(['/lessons']);
+  onFileSelected(event: any, type: 'audios' | 'videos' | 'tasks' | 'materials') {
+    console.log('File selected:', event, 'Type:', type); // Debugging line
+    const file = event.target.files[0];
+    if (file && this.isTeacher) {
+      this.firestoreService.uploadFile(this.lessonId, file, type)
+        .then(() => {
+          console.log(`${type} uploaded successfully.`);
+          this.refreshFiles();
+        })
+        .catch(error => {
+          console.error(`Error uploading ${type}:`, error);
+        });
+    }
+  }
+
+  viewFiles(type: 'audios' | 'videos' | 'tasks' | 'materials') {
+    console.log(`Viewing ${type}`);
+    // Implement viewing logic as needed
+  }
+
+  refreshFiles() {
+    this.audios$ = this.firestoreService.getFiles(this.lessonId, 'audios');
+    this.videos$ = this.firestoreService.getFiles(this.lessonId, 'videos');
+    this.tasks$ = this.firestoreService.getFiles(this.lessonId, 'tasks');
+    this.materials$ = this.firestoreService.getFiles(this.lessonId, 'materials');
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe(); // Ensure we clean up subscriptions
   }
 }

@@ -1,9 +1,10 @@
 // src/service/firestore.service.ts
+// Correct imports
 import { Injectable } from '@angular/core';
 import { AngularFirestore, DocumentReference } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { Observable, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { Observable, of, combineLatest } from 'rxjs';  // Correctly importing of and combineLatest from rxjs
+import { map, catchError, switchMap } from 'rxjs/operators';  // Import necessary operators
 
 interface UserStats {
   clasesCompletadas: number;
@@ -227,5 +228,65 @@ getStudents(): Observable<UserDocument[]> {
       })
     );
 }
+
+// Upload a file to a specified lesson collection (audio, video, tasks, materials)
+uploadFile(lessonId: string, file: File, type: 'audios' | 'videos' | 'tasks' | 'materials'): Promise<DocumentReference<unknown>> {
+  const filePath = `lessons/${lessonId}/${type}/${file.name}`;
+  const fileRef = this.storage.ref(filePath);
+  return this.storage.upload(filePath, file)
+    .then(() => fileRef.getDownloadURL().toPromise())
+    .then(url => {
+      return this.firestore.collection(`lessons/${lessonId}/${type}`).add({
+        url,
+        name: file.name,
+        createdAt: new Date(),
+      });
+    })
+    .catch(error => {
+      console.error(`Error uploading ${type}:`, error);
+      throw error;
+    });
+}
+
+// Fetch files (audio, video, tasks, materials) for a lesson
+getFiles(lessonId: string, type: 'audios' | 'videos' | 'tasks' | 'materials'): Observable<any[]> {
+  return this.firestore.collection(`lessons/${lessonId}/${type}`).valueChanges().pipe(
+    catchError(error => {
+      console.error(`Error fetching ${type}:`, error);
+      return of([]);
+    })
+  );
+}
+
+// Fetch feedbacks for a specific student and include teacher names
+getFeedbacksWithTeacherNames(studentId: string): Observable<any[]> {
+  return this.firestore.collection('users').doc(studentId).collection('feedbacks').valueChanges().pipe(
+    switchMap((feedbacks: any[]) => {
+      if (feedbacks.length === 0) return of([]); // Return empty array if no feedbacks
+
+      // Fetch teacher names for each feedback
+      const teacherObservables = feedbacks.map(feedback => {
+        if (!feedback.teacherId) {
+          // Return feedback with "Unknown Teacher" if teacherId is missing
+          return of({ ...feedback, teacherName: 'Unknown Teacher' });
+        }
+
+        // Retrieve teacher's name using teacherId
+        return this.firestore.collection('users').doc(feedback.teacherId).valueChanges().pipe(
+          map((teacher: any) => ({
+            ...feedback,
+            teacherName: teacher?.nombre || teacher?.displayName || teacher?.name || 'Unknown Teacher'  // Fallback if name fields are missing
+          }))
+        );
+      });
+      return combineLatest(teacherObservables);
+    }),
+    catchError(error => {
+      console.error('Error fetching feedbacks with teacher names:', error);
+      return of([]);
+    })
+  );
+}
+
 
 }

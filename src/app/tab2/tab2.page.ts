@@ -1,4 +1,5 @@
 // src/app/tab2/tab2.page.ts
+
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/service/auth.service';
 import { FirestoreService } from 'src/service/firestore.service';
@@ -16,7 +17,7 @@ export class Tab2Page implements OnInit {
   stats: any = { clasesCompletadas: 0, tareasCompletadas: 0, logros: 0 };
   currentCourse: any = null;
   recentSessions: any[] = [];
-  userRole: string | null = null; // Added to store user role
+  userRole: string | null = null; // Store user role
   feedbacks: any[] = []; // Store feedbacks for students
 
   constructor(
@@ -48,6 +49,16 @@ export class Tab2Page implements OnInit {
     });
   }
 
+  // Load feedbacks for students with teacher names
+  loadFeedbacks(userId: string) {
+    this.firestoreService.getFeedbacksWithTeacherNames(userId).subscribe(feedbacks => this.feedbacks = feedbacks);
+  }
+
+  // Navigate to feedback creation page (for teachers)
+  giveFeedback() {
+    this.router.navigate(['/give-feedback']);
+  }
+
   // Navigate to the update profile component
   goToUpdateProfile() {
     this.router.navigate(['/update-profile']);
@@ -57,13 +68,8 @@ export class Tab2Page implements OnInit {
     this.router.navigate(['/lessons', courseId, { courseName }]);
   }
 
-  // Load feedbacks for students
-  loadFeedbacks(userId: string) {
-    this.firestoreService.getFeedbacksForStudent(userId).subscribe(feedbacks => this.feedbacks = feedbacks);
-  }
-
-  // Navigate to feedback creation page (for teachers)
-  giveFeedback() {
-    this.router.navigate(['/give-feedback']);
+  // Toggle visibility of feedback description
+  toggleFeedbackDescription(feedback: any) {
+    feedback.showDescription = !feedback.showDescription;
   }
 }
