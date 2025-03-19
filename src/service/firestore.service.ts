@@ -186,12 +186,18 @@ export class FirestoreService {
 
 // Fetch user role
 getUserRole(userId: string): Observable<string | null> {
-  // Specify the type explicitly to avoid type errors
   return this.firestore.collection('users').doc<UserDocument>(userId).valueChanges().pipe(
-    map(user => user?.role || null),  // Access role safely
+    map(user => {
+      if (user && user.role) {
+        return user.role;
+      } else {
+        console.warn(`User role is missing or invalid for userId: ${userId}`);
+        return null;
+      }
+    }),
     catchError(error => {
       console.error('Error fetching user role:', error);
-      return of(null);  // Handle errors gracefully
+      return of(null);
     })
   );
 }

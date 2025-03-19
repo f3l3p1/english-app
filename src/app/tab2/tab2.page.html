@@ -1,5 +1,4 @@
 <!-- src/app/tab2/tab2.page.html -->
-
 <ion-header>
   <ion-toolbar>
     <ion-title>Profile</ion-title>
@@ -21,7 +20,7 @@
       <p>{{ user.email }}</p>
     </div>
 
-    <div class="stats" *ngIf="stats">
+    <div class="stats" *ngIf="stats$ | async as stats">
       <ion-card>
         <ion-row>
           <ion-col>
@@ -70,12 +69,10 @@
       </ion-scroll>
     </div>
 
-    <!-- "Dar Feedback" button for teachers -->
     <ion-button *ngIf="userRole === 'teacher'" expand="block" (click)="giveFeedback()">
       Dar Feedback
     </ion-button>
 
-    <!-- Feedback viewing button for students -->
     <div *ngIf="userRole === 'student' && feedbacks.length > 0">
       <h3>Feedbacks Recibidos</h3>
       <ion-list>

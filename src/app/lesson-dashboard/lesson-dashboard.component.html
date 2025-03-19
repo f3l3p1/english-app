@@ -1,5 +1,3 @@
-<!-- src/app/lesson-dashboard/lesson-dashboard.component.html -->
-
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
@@ -16,54 +14,54 @@
 
 <ion-content class="dashboard-container">
   <!-- Audio Panel -->
-  <ion-card>
+  <ion-card class="dashboard-card">
     <ion-card-header>
       <ion-icon name="volume-high-outline"></ion-icon>
       <ion-title>Audio</ion-title>
     </ion-card-header>
     <ion-card-content>
-      <input #audioInput type="file" (change)="onFileSelected($event, 'audios')" style="display: none;">
-      <button *ngIf="isTeacher" ion-button fill="clear" (click)="audioInput.click()">Upload Audio</button>
-      <button ion-button fill="clear" (click)="viewFiles('audios')">View Audio</button>
+      <input #audioInput type="file" (change)="onFileSelected($event, 'audios')" hidden>
+      <ion-button *ngIf="isTeacher" fill="outline" expand="block" (click)="audioInput.click()">Upload Audio</ion-button>
+      <ion-button expand="block" fill="clear" (click)="viewFiles('audios')">View Audio</ion-button>
     </ion-card-content>
   </ion-card>
 
   <!-- Video Panel -->
-  <ion-card>
+  <ion-card class="dashboard-card">
     <ion-card-header>
       <ion-icon name="videocam-outline"></ion-icon>
       <ion-title>Video</ion-title>
     </ion-card-header>
     <ion-card-content>
-      <input #videoInput type="file" (change)="onFileSelected($event, 'videos')" style="display: none;">
-      <button *ngIf="isTeacher" ion-button fill="clear" (click)="videoInput.click()">Upload Video</button>
-      <button ion-button fill="clear" (click)="viewFiles('videos')">View Video</button>
+      <input #videoInput type="file" (change)="onFileSelected($event, 'videos')" hidden>
+      <ion-button *ngIf="isTeacher" fill="outline" expand="block" (click)="videoInput.click()">Upload Video</ion-button>
+      <ion-button expand="block" fill="clear" (click)="viewFiles('videos')">View Video</ion-button>
     </ion-card-content>
   </ion-card>
 
   <!-- Tasks Panel -->
-  <ion-card>
+  <ion-card class="dashboard-card">
     <ion-card-header>
       <ion-icon name="clipboard-outline"></ion-icon>
       <ion-title>Tasks</ion-title>
     </ion-card-header>
     <ion-card-content>
-      <input #taskInput type="file" (change)="onFileSelected($event, 'tasks')" style="display: none;">
-      <button *ngIf="isTeacher" ion-button fill="clear" (click)="taskInput.click()">Upload Task</button>
-      <button ion-button fill="clear" (click)="viewFiles('tasks')">View Tasks</button>
+      <input #taskInput type="file" (change)="onFileSelected($event, 'tasks')" hidden>
+      <ion-button *ngIf="isTeacher" fill="outline" expand="block" (click)="taskInput.click()">Upload Task</ion-button>
+      <ion-button expand="block" fill="clear" (click)="viewFiles('tasks')">View Tasks</ion-button>
     </ion-card-content>
   </ion-card>
 
   <!-- Materials Panel -->
-  <ion-card>
+  <ion-card class="dashboard-card">
     <ion-card-header>
       <ion-icon name="book-outline"></ion-icon>
       <ion-title>Materials</ion-title>
     </ion-card-header>
     <ion-card-content>
-      <input #materialInput type="file" (change)="onFileSelected($event, 'materials')" style="display: none;">
-      <button *ngIf="isTeacher" ion-button fill="clear" (click)="materialInput.click()">Upload Material</button>
-      <button ion-button fill="clear" (click)="viewFiles('materials')">View Materials</button>
+      <input #materialInput type="file" (change)="onFileSelected($event, 'materials')" hidden>
+      <ion-button *ngIf="isTeacher" fill="outline" expand="block" (click)="materialInput.click()">Upload Material</ion-button>
+      <ion-button expand="block" fill="clear" (click)="viewFiles('materials')">View Materials</ion-button>
     </ion-card-content>
   </ion-card>
 

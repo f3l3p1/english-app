@@ -1,11 +1,16 @@
 // src/app/tab1/tab1.page.ts
-
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/service/auth.service'; // Ensure the path is correct
-import { FirestoreService } from 'src/service/firestore.service'; // Import FirestoreService
+import { AuthService } from 'src/service/auth.service';
+import { FirestoreService } from 'src/service/firestore.service';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { User } from 'firebase/auth';
+
+interface Stats {
+  clasesCompletadas: number;
+  tareasCompletadas: number;
+  logros: number;
+}
 
 @Component({
   selector: 'app-tab1',
@@ -13,8 +18,8 @@ import { User } from 'firebase/auth';
   styleUrls: ['./tab1.page.scss'],
 })
 export class Tab1Page implements OnInit {
-  user$: Observable<User | null>; // Observable for the current user
-  stats: any = { clasesCompletadas: 0, tareasCompletadas: 0, logros: 0 }; // Default stats values
+  user$: Observable<User | null>;
+  stats$: Observable<Stats>; // Correct typing for the observable
 
   courses = [
     { id: 1, title: 'New Comers', image: 'assets/images/newcomers.webp' },
@@ -24,34 +29,31 @@ export class Tab1Page implements OnInit {
   ];
 
   constructor(
-    private authService: AuthService,
-    private firestoreService: FirestoreService, // Inject FirestoreService
+    private authService: AuthService, 
+    private firestoreService: FirestoreService, 
     private router: Router
   ) {
     this.user$ = this.authService.currentUser$;
+    this.stats$ = of({ clasesCompletadas: 0, tareasCompletadas: 0, logros: 0 }); // Initial value
   }
 
   ngOnInit(): void {
-    // Fetch the user stats dynamically
     this.user$.subscribe(user => {
       if (user) {
-        const userId = user.uid;
-        this.firestoreService.getUserStats(userId).subscribe(stats => this.stats = stats);
+        // Fetch the stats as an observable to keep them dynamic
+        this.stats$ = this.firestoreService.getUserStats(user.uid);
       }
     });
   }
 
-  // Navigate to the update profile component
   goToUpdateProfile() {
     this.router.navigate(['/update-profile']);
   }
 
-  // Navigate to Tab3
   goToTab3() {
     this.router.navigate(['/tabs/tab3']);
   }
 
-  // Navigate to the subscribe page of the selected course
   goToSubscribe(courseId: number) {
     this.router.navigate(['/subscribe', courseId]);
   }

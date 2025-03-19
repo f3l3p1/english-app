@@ -1,11 +1,16 @@
 // src/app/tab2/tab2.page.ts
-
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/service/auth.service';
 import { FirestoreService } from 'src/service/firestore.service';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { User } from 'firebase/auth';
+
+interface Stats {
+  clasesCompletadas: number;
+  tareasCompletadas: number;
+  logros: number;
+}
 
 @Component({
   selector: 'app-tab2',
@@ -14,11 +19,11 @@ import { User } from 'firebase/auth';
 })
 export class Tab2Page implements OnInit {
   user$: Observable<User | null>;
-  stats: any = { clasesCompletadas: 0, tareasCompletadas: 0, logros: 0 };
+  stats$: Observable<Stats>; // Correctly type as observable
   currentCourse: any = null;
   recentSessions: any[] = [];
-  userRole: string | null = null; // Store user role
-  feedbacks: any[] = []; // Store feedbacks for students
+  userRole: string | null = null;
+  feedbacks: any[] = [];
 
   constructor(
     private authService: AuthService,
@@ -26,6 +31,7 @@ export class Tab2Page implements OnInit {
     private router: Router
   ) {
     this.user$ = this.authService.currentUser$;
+    this.stats$ = of({ clasesCompletadas: 0, tareasCompletadas: 0, logros: 0 }); // Initial value
   }
 
   ngOnInit(): void {
@@ -33,33 +39,34 @@ export class Tab2Page implements OnInit {
       if (user) {
         const userId = user.uid;
 
-        // Fetch user-specific data
-        this.firestoreService.getUserStats(userId).subscribe(stats => this.stats = stats);
+        // Fetch stats as an observable for real-time updates
+        this.stats$ = this.firestoreService.getUserStats(userId);
         this.firestoreService.getCurrentCourse(userId).subscribe(course => this.currentCourse = course);
         this.firestoreService.getRecentSessions(userId).subscribe(sessions => this.recentSessions = sessions);
 
-        // Fetch user role
         this.firestoreService.getUserRole(userId).subscribe(role => {
           this.userRole = role;
           if (role === 'student') {
-            this.loadFeedbacks(userId); // Load feedbacks for students
+            this.loadFeedbacks(userId);
           }
         });
       }
     });
   }
 
-  // Load feedbacks for students with teacher names
   loadFeedbacks(userId: string) {
-    this.firestoreService.getFeedbacksWithTeacherNames(userId).subscribe(feedbacks => this.feedbacks = feedbacks);
+    this.firestoreService.getFeedbacksForStudent(userId).subscribe(feedbacks => {
+      this.feedbacks = feedbacks.map(feedback => ({
+        ...feedback,
+        showDescription: false  // Initialize showDescription for toggling
+      }));
+    });
   }
 
-  // Navigate to feedback creation page (for teachers)
-  giveFeedback() {
-    this.router.navigate(['/give-feedback']);
+  toggleFeedbackDescription(feedback: any) {
+    feedback.showDescription = !feedback.showDescription; // Toggle description visibility
   }
 
-  // Navigate to the update profile component
   goToUpdateProfile() {
     this.router.navigate(['/update-profile']);
   }
@@ -68,8 +75,7 @@ export class Tab2Page implements OnInit {
     this.router.navigate(['/lessons', courseId, { courseName }]);
   }
 
-  // Toggle visibility of feedback description
-  toggleFeedbackDescription(feedback: any) {
-    feedback.showDescription = !feedback.showDescription;
+  giveFeedback() {
+    this.router.navigate(['/give-feedback']);
   }
 }
